@@ -29,6 +29,23 @@
   @keyframes fadeUp    { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
   @keyframes floatDot  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
   @keyframes spinSlow  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  /* ── RESPONSIVE MOBILE ── */
+  @media (max-width: 860px) {
+    .site-nav   { display: none !important; }
+    .hero-photo { display: none !important; }
+    .about-grid { grid-template-columns: 1fr !important; }
+    .how-intro  { grid-template-columns: 1fr !important; }
+    .hero-phone-row { flex-direction: column !important; align-items: flex-start !important; gap: 2px !important; }
+  }
+  @media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr 1fr !important; }
+    .float-btn   { padding: 11px 16px !important; font-size: 10px !important; }
+    .float-btn span.price { display: none !important; }
+  }
+  @media (max-width: 400px) {
+    .footer-grid { grid-template-columns: 1fr !important; }
+  }
 </style>
 </head>
 <body>
@@ -212,9 +229,9 @@ const FloatingCall = ({ t }) => {
     return () => window.removeEventListener('scroll', fn);
   }, []);
   return (
-    <a href="tel:0901212212" style={{ position:'fixed', bottom:'20px', right:'20px', zIndex:300, display:'flex', alignItems:'center', gap:'10px', background: t.accent, color: t.accentText, padding:'12px 22px', borderRadius:'40px', textDecoration:'none', boxShadow:'0 4px 24px rgba(0,0,0,0.25)', fontFamily:"'Cinzel',serif", fontSize:'11px', fontWeight:600, letterSpacing:'0.12em', transition:'transform 300ms, opacity 300ms', transform: show ? 'translateY(0)' : 'translateY(80px)', opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', animation: show ? 'btnPulse 2.5s ease-in-out infinite' : 'none' }}>
+    <a href="tel:0901212212" className="float-btn" style={{ position:'fixed', bottom:'20px', right:'20px', zIndex:300, display:'flex', alignItems:'center', gap:'10px', background: t.accent, color: t.accentText, padding:'12px 22px', borderRadius:'40px', textDecoration:'none', boxShadow:'0 4px 24px rgba(0,0,0,0.25)', fontFamily:"'Cinzel',serif", fontSize:'11px', fontWeight:600, letterSpacing:'0.12em', transition:'transform 300ms, opacity 300ms', transform: show ? 'translateY(0)' : 'translateY(80px)', opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', animation: show ? 'btnPulse 2.5s ease-in-out infinite' : 'none' }}>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
-      0901 212 212 <span style={{ opacity:0.75, fontWeight:300 }}>· CHF 2.– / min.</span>
+      0901 212 212 <span className="price" style={{ opacity:0.75, fontWeight:300 }}>· CHF 2.– / min.</span>
     </a>
   );
 };
@@ -250,7 +267,7 @@ const AppHeader = ({ t, activeSection }) => {
           <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginTop:'2px' }}>Voyance · Suisse</div>
         </div>
       </div>
-      <nav style={{ display:'flex', gap:'22px' }}>
+      <nav className="site-nav" style={{ display:'flex', gap:'22px' }}>
         {links.slice(0,5).map(([id,label]) => (
           <button key={id} onClick={() => navClick(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'Cinzel',serif", fontSize:'8.5px', fontWeight:500, letterSpacing:'0.14em', textTransform:'uppercase', color: activeSection===id ? t.accent : t.textMuted, borderBottom: activeSection===id ? `1px solid ${t.accent}` : '1px solid transparent', padding:'3px 0', transition:'color 200ms' }}>{label}</button>
         ))}
@@ -282,76 +299,72 @@ const AppHero = ({ t }) => {
   React.useEffect(() => { const tid = setTimeout(() => setVis(true), 80); return () => clearTimeout(tid); }, []);
   const anim = delay => ({ animation: vis ? `fadeUp 800ms cubic-bezier(0.25,0.46,0.45,0.94) ${delay}ms both` : 'none' });
   return (
-    <section id="accueil" style={{ minHeight:'100vh', display:'flex', alignItems:'stretch', background: t.bgPage, position:'relative', overflow:'hidden' }}>
+    <section id="accueil" style={{ minHeight:'100vh', display:'flex', flexDirection:'column', justifyContent:'center', background: t.bgPage, position:'relative', overflow:'hidden', padding:'clamp(92px,11vh,120px) clamp(28px,6vw,80px) clamp(56px,7vh,80px)' }}>
       <StarField t={t} />
-      <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse 60% 90% at 28% 50%, ${t.bgSurface}cc, transparent)` }} />
-      <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'160px', background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
+      <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse 75% 80% at 20% 50%, ${t.bgSurface}cc, transparent)` }} />
+      <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'120px', background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
 
-      {/* Photo hero — droite, pleine hauteur, personnage entier */}
-      <div style={{
-        position:'absolute', right:0, top:0, bottom:0,
-        width:'50%', zIndex:1, overflow:'hidden',
-        display:'flex', alignItems:'flex-end', justifyContent:'center'
+      {/* Photo — accent droit, 32% de largeur, fondue dans le fond */}
+      <div className="hero-photo" style={{
+        position:'absolute', right:0, bottom:0, top:'40px',
+        width:'clamp(220px,32%,440px)', zIndex:1, overflow:'hidden', pointerEvents:'none'
       }}>
         <img
           src="images/marco-telephone.jpg.png"
           alt="Médium voyant en consultation téléphonique"
           onError={e => { e.target.parentNode.style.display='none'; }}
-          style={{
-            width:'100%',
-            height:'100%',
-            objectFit:'contain',
-            objectPosition:'center bottom',
-            display:'block',
-          }}
+          style={{ width:'100%', height:'100%', objectFit:'contain', objectPosition:'right bottom', display:'block' }}
         />
-        {/* fondu gauche — transition douce vers le texte */}
-        <div style={{ position:'absolute', inset:0, background:`linear-gradient(to right, ${t.bgPage} 0%, ${t.bgPage}99 8%, ${t.bgPage}22 28%, transparent 52%)` }} />
-        {/* fondu bas */}
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'120px', background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
+        <div style={{ position:'absolute', inset:0, background:`linear-gradient(to right, ${t.bgPage} 0%, ${t.bgPage}dd 15%, ${t.bgPage}66 35%, transparent 65%)` }} />
+        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'100px', background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
       </div>
 
-      {/* Contenu texte */}
-      <div style={{ position:'relative', zIndex:2, width:'50%', minWidth:'320px', display:'flex', flexDirection:'column', justifyContent:'center', textAlign:'left', padding:'clamp(92px,11vh,130px) clamp(20px,4vw,64px) clamp(56px,7vh,88px)' }}>
+      {/* Contenu — pleine largeur disponible */}
+      <div style={{ position:'relative', zIndex:2, maxWidth:'820px' }}>
         <div style={anim(0)}><Eyebrow t={t}>✦ &nbsp; Voyance & Médiumnité · Suisse &nbsp; ✦</Eyebrow></div>
-        <h1 style={{ ...anim(130), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(36px,4.8vw,66px)', fontWeight:300, lineHeight:1.08, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'8px' }}>
+
+        <h1 style={{ ...anim(120), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(42px,6vw,82px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'0' }}>
           Tu cherches une réponse.
         </h1>
-        <h1 style={{ ...anim(200), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(36px,4.8vw,66px)', fontWeight:300, lineHeight:1.08, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'24px' }}>
+        <h1 style={{ ...anim(190), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(42px,6vw,82px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'22px' }}>
           <em style={{ fontStyle:'italic', color: t.accent }}>Pas un discours.</em>
         </h1>
-        <p style={{ ...anim(280), fontFamily:"'Jost',sans-serif", fontSize:'clamp(14px,1.5vw,16px)', lineHeight:1.8, color: t.textSecondary, maxWidth:'440px', marginBottom:'28px' }}>
+
+        <p style={{ ...anim(270), fontFamily:"'Jost',sans-serif", fontSize:'clamp(14px,1.5vw,17px)', lineHeight:1.8, color: t.textSecondary, maxWidth:'480px', marginBottom:'32px' }}>
           Je te dis ce que je capte. Rien de plus. Tu appelles — on voit ensemble ce qui se présente.
         </p>
-        <div style={{ ...anim(340), width:'180px', height:'1px', background: t.borderStrong, marginBottom:'28px' }} />
-        <div style={anim(420)}>
-          <div style={{ display:'flex', alignItems:'baseline', gap:'12px', flexWrap:'wrap', marginBottom:'5px', animation:'heroPulse 2.6s ease-in-out infinite' }}>
-            <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'clamp(20px,2.8vw,38px)', fontWeight:600, letterSpacing:'0.06em', color: t.accent, textDecoration:'none' }}>0901 212 212</a>
-            <span style={{ fontFamily:"'Cinzel',serif", fontSize:'clamp(20px,2.8vw,38px)', fontWeight:300, letterSpacing:'0.04em', color: t.accent, opacity:0.7 }}>CHF 2.– / min.</span>
+
+        <div style={{ ...anim(330), width:'200px', height:'1px', background: t.borderStrong, marginBottom:'32px' }} />
+
+        {/* Numéro + prix — grande taille, pleine largeur */}
+        <div style={anim(410)}>
+          <div className="hero-phone-row" style={{ display:'flex', alignItems:'baseline', gap:'clamp(10px,2vw,24px)', flexWrap:'wrap', marginBottom:'6px', animation:'heroPulse 2.6s ease-in-out infinite' }}>
+            <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'clamp(28px,4.5vw,62px)', fontWeight:600, letterSpacing:'0.05em', color: t.accent, textDecoration:'none', lineHeight:1 }}>0901 212 212</a>
+            <span style={{ fontFamily:"'Cinzel',serif", fontSize:'clamp(28px,4.5vw,62px)', fontWeight:300, letterSpacing:'0.04em', color: t.accent, opacity:0.65, lineHeight:1 }}>CHF 2.– / min.</span>
           </div>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'9.5px', letterSpacing:'0.14em', color: t.textMuted, marginBottom:'26px' }}>Disponible 7j/7 · 8h–22h</div>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', letterSpacing:'0.16em', color: t.textMuted, marginBottom:'32px' }}>Disponible 7j/7 · 8h–22h · Confidentiel</div>
         </div>
-        <div style={{ ...anim(510), display:'flex', gap:'12px', flexWrap:'wrap', marginBottom:'40px' }}>
-          <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:`1px solid ${t.accent}`, borderRadius:'3px', padding:'13px 28px', textDecoration:'none', animation:'btnPulse 2.6s ease-in-out infinite', display:'flex', alignItems:'center', gap:'8px' }}>
+
+        <div style={{ ...anim(500), display:'flex', gap:'12px', flexWrap:'wrap', marginBottom:'44px' }}>
+          <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:`1px solid ${t.accent}`, borderRadius:'3px', padding:'14px 32px', textDecoration:'none', animation:'btnPulse 2.6s ease-in-out infinite', display:'flex', alignItems:'center', gap:'8px' }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
             Appeler maintenant
           </a>
-          <button onClick={() => scrollToSection('methodes')} style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, background:'transparent', border:`1px solid ${t.borderStrong}`, borderRadius:'3px', padding:'13px 28px', cursor:'pointer' }}>Voir les méthodes</button>
+          <button onClick={() => scrollToSection('methodes')} style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, background:'transparent', border:`1px solid ${t.borderStrong}`, borderRadius:'3px', padding:'14px 32px', cursor:'pointer' }}>Voir les méthodes</button>
         </div>
-        <div style={{ ...anim(640), display:'flex', gap:'clamp(18px,3vw,44px)', flexWrap:'wrap' }}>
+
+        <div style={{ ...anim(620), display:'flex', gap:'clamp(24px,4vw,56px)', flexWrap:'wrap', paddingTop:'12px', borderTop:`1px solid ${t.border}` }}>
           {[['15+','Années d\'expérience'],['7j/7','Disponibilité'],['100%','Confidentiel']].map(([v,l]) => (
             <div key={v}>
-              <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(18px,2.2vw,26px)', fontWeight:400, color: t.accent, lineHeight:1 }}>{v}</div>
-              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.14em', textTransform:'uppercase', color: t.textMuted, marginTop:'4px' }}>{l}</div>
+              <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(20px,2.5vw,30px)', fontWeight:400, color: t.accent, lineHeight:1 }}>{v}</div>
+              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.14em', textTransform:'uppercase', color: t.textMuted, marginTop:'5px' }}>{l}</div>
             </div>
           ))}
         </div>
       </div>
 
-      <div style={{ position:'absolute', bottom:'24px', left:'clamp(20px,5vw,72px)', opacity:0.4, cursor:'pointer', display:'flex', alignItems:'center', gap:'7px', zIndex:2 }} onClick={() => scrollToSection('apropos')}>
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ animation:'floatDot 2s ease-in-out infinite' }}>
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
+      <div style={{ position:'absolute', bottom:'22px', left:'clamp(28px,6vw,80px)', opacity:0.4, cursor:'pointer', display:'flex', alignItems:'center', gap:'7px', zIndex:2 }} onClick={() => scrollToSection('apropos')}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ animation:'floatDot 2s ease-in-out infinite' }}><polyline points="6 9 12 15 18 9"/></svg>
         <span style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.16em', textTransform:'uppercase', color: t.accent }}>Découvrir</span>
       </div>
     </section>
@@ -364,7 +377,7 @@ const AppHero = ({ t }) => {
 const AppAbout = ({ t }) => (
   <section id="apropos" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgSurface, position:'relative', overflow:'hidden' }}>
     <div style={{ position:'absolute', right:'-60px', top:'-60px', width:'360px', height:'360px', background:`radial-gradient(circle, ${t.accent}12, transparent 70%)`, pointerEvents:'none' }} />
-    <div style={{ maxWidth:'1020px', margin:'0 auto', display:'grid', gridTemplateColumns:'minmax(180px,300px) 1fr', gap:'clamp(32px,5vw,72px)', alignItems:'center' }}>
+    <div className="about-grid" style={{ maxWidth:'1020px', margin:'0 auto', display:'grid', gridTemplateColumns:'minmax(180px,300px) 1fr', gap:'clamp(32px,5vw,72px)', alignItems:'center' }}>
       <div style={{ position:'relative' }}>
         <div style={{ width:'100%', aspectRatio:'3/4', border:`1px solid ${t.border}`, borderRadius:'4px', boxShadow: t.shadowCard, overflow:'hidden', position:'relative' }}>
           <img src="images/marco-pendule-amethyste.jpg.png" alt="Médium voyant avec pendule améthyste" style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center top', display:'block' }} onError={e => { e.target.style.display='none'; }} />
@@ -425,7 +438,7 @@ const AppHowItWorks = ({ t }) => {
   ];
   return (
     <section id="comment" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgAlt }}>
-      <div style={{ maxWidth:'960px', margin:'0 auto clamp(32px,5vw,56px)', display:'grid', gridTemplateColumns:'minmax(160px,240px) 1fr', gap:'clamp(24px,4vw,56px)', alignItems:'center' }}>
+      <div className="how-intro" style={{ maxWidth:'960px', margin:'0 auto clamp(32px,5vw,56px)', display:'grid', gridTemplateColumns:'minmax(160px,240px) 1fr', gap:'clamp(24px,4vw,56px)', alignItems:'center' }}>
         <div style={{ position:'relative', borderRadius:'4px', overflow:'hidden', boxShadow: t.shadowCard, border:`1px solid ${t.border}` }}>
           <img src="images/marco-pendule-cristal.jpg.png" alt="Médium voyant avec pendule de cristal" style={{ width:'100%', aspectRatio:'3/4', objectFit:'cover', objectPosition:'center top', display:'block' }} onError={e => { e.target.style.display='none'; }} />
           <div style={{ position:'absolute', inset:0, background:`linear-gradient(to top, ${t.bgAlt}99 0%, transparent 45%)` }} />
@@ -702,7 +715,7 @@ const AppContact = ({ t }) => (
 const AppFooter = ({ t }) => (
   <footer style={{ background: t.bgAlt, borderTop:`1px solid ${t.border}`, padding:'clamp(32px,5vw,56px) clamp(20px,5vw,68px) clamp(18px,3vw,28px)' }}>
     <div style={{ maxWidth:'1020px', margin:'0 auto' }}>
-      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))', gap:'clamp(22px,3vw,44px)', paddingBottom:'24px', borderBottom:`1px solid ${t.border}`, marginBottom:'18px' }}>
+      <div className="footer-grid" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))', gap:'clamp(22px,3vw,44px)', paddingBottom:'24px', borderBottom:`1px solid ${t.border}`, marginBottom:'18px' }}>
         <div>
           <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'19px', fontWeight:300, fontStyle:'italic', color: t.textPrimary, marginBottom:'4px' }}>medium<span style={{ color: t.accent }}>voyant</span><span style={{ fontSize:'12px', color: t.textMuted }}>.ch</span></div>
           <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginBottom:'10px' }}>Voyance · Suisse</div>
