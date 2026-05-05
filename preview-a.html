@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prévisualisation A — Lumière Dorée · MediumVoyant.ch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Lato', sans-serif; background: #fdf8f1; color: #231a0c; overflow-x: hidden; }
+
+/* ── PALETTE A — LUMIÈRE DORÉE ── */
+:root {
+  --bg:       #fdf8f1;
+  --bg2:      #f5ece0;
+  --bg3:      #ede0cf;
+  --bgCard:   #fffcf7;
+  --text1:    #231a0c;
+  --text2:    #5c4530;
+  --text3:    #9e7d5c;
+  --gold:     #a0682a;
+  --goldLight:#c8923d;
+  --border:   rgba(160,104,42,0.18);
+  --borderS:  rgba(160,104,42,0.45);
+  --shadow:   0 2px 22px rgba(100,60,10,0.10);
+  --shadowG:  0 0 28px rgba(160,104,42,0.22);
+}
+
+/* ── BADGE VERSION ── */
+.version-badge {
+  position: fixed; top: 12px; right: 12px; z-index: 9999;
+  background: var(--gold); color: #fff; font-family: 'Playfair Display', serif;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  padding: 7px 16px; border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp  { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
+@keyframes pulse   { 0%,100%{box-shadow:0 0 0 0 rgba(160,104,42,0.45)} 50%{box-shadow:0 0 0 12px rgba(160,104,42,0)} }
+@keyframes shimmer { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 18px rgba(160,104,42,0.5)} }
+@keyframes float   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+@keyframes starPop { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+
+/* ── HEADER ── */
+header {
+  position: sticky; top: 0; z-index: 200;
+  height: 68px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(18px,5vw,60px);
+  background: rgba(253,248,241,0.92); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 18px rgba(100,60,10,0.07);
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-icon {
+  width: 36px; height: 36px; border: 1px solid var(--borderS); border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 18px;
+  font-weight: 300; font-style: italic; color: var(--text1); line-height: 1;
+}
+.logo-name span { color: var(--gold); }
+.logo-sub {
+  font-family: 'Playfair Display', serif; font-size: 7.5px;
+  font-variant: small-caps; letter-spacing: 0.22em; color: var(--text3); margin-top: 2px;
+}
+nav { display: flex; gap: 24px; }
+nav a {
+  font-family: 'Playfair Display', serif; font-size: 9px; font-variant: small-caps;
+  letter-spacing: 0.18em; color: var(--text3); text-decoration: none;
+  border-bottom: 1px solid transparent; padding: 3px 0; transition: color 200ms;
+}
+nav a:hover { color: var(--gold); border-color: var(--gold); }
+.btn-call {
+  font-family: 'Playfair Display', serif; font-size: 9px; font-variant: small-caps;
+  letter-spacing: 0.16em; color: #fff; background: var(--gold);
+  border-radius: 3px; padding: 9px 20px; text-decoration: none; white-space: nowrap;
+  transition: background 200ms;
+}
+.btn-call:hover { background: var(--goldLight); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  background: var(--bg); position: relative; overflow: hidden;
+  padding: clamp(90px,10vh,110px) clamp(20px,5vw,60px) clamp(56px,7vh,80px);
+}
+.hero-photo {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  pointer-events: none; z-index: 0;
+}
+.hero-photo img {
+  height: 100%; width: auto; object-fit: contain; object-position: center;
+  opacity: 0.14; filter: brightness(0.9) saturate(0.5) sepia(0.3);
+}
+.hero-photo-fade {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 58% 72% at 62% 48%, transparent 10%, rgba(253,248,241,0.92) 52%, #fdf8f1 76%);
+}
+.hero-veil {
+  position: absolute; inset: 0; background: rgba(253,248,241,0.45); z-index: 0;
+}
+.hero-gradient-bottom {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+  background: linear-gradient(to top, var(--bg), transparent); z-index: 0;
+}
+.hero-content { position: relative; z-index: 2; max-width: 680px; width: 100%; }
+
+.eyebrow {
+  font-family: 'Playfair Display', serif; font-size: 10px; font-variant: small-caps;
+  letter-spacing: 0.28em; color: var(--gold); margin-bottom: 16px;
+  animation: fadeUp 700ms 0ms both;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(42px,5.8vw,76px);
+  font-weight: 300; line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--text1); margin-bottom: 0;
+  animation: fadeUp 700ms 100ms both;
+}
+.hero h1.line2 {
+  margin-bottom: 24px;
+  animation: fadeUp 700ms 180ms both;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero-lead {
+  font-family: 'Lato', sans-serif; font-size: clamp(14px,1.5vw,16px); font-weight: 300;
+  line-height: 1.9; color: var(--text2); max-width: 440px; margin: 0 auto 28px;
+  animation: fadeUp 700ms 260ms both;
+}
+
+/* ornament */
+.ornament {
+  display: flex; align-items: center; gap: 14px; max-width: 220px;
+  margin: 0 auto 28px;
+  animation: fadeUp 700ms 310ms both;
+}
+.ornament-line { flex: 1; height: 1px; background: var(--borderS); }
+.ornament-dot { color: var(--gold); font-size: 10px; }
+
+/* numéro */
+.hero-phone-row {
+  display: flex; align-items: baseline; justify-content: center; gap: clamp(8px,1.2vw,18px);
+  margin-bottom: 6px;
+  animation: shimmer 2.8s ease-in-out infinite, fadeUp 700ms 390ms both;
+}
+.hero-number {
+  font-family: 'Playfair Display', serif; font-size: clamp(22px,3.2vw,46px);
+  font-weight: 700; letter-spacing: 0.04em; color: var(--gold); text-decoration: none;
+}
+.hero-price {
+  font-family: 'Playfair Display', serif; font-size: clamp(22px,3.2vw,46px);
+  font-weight: 300; letter-spacing: 0.03em; color: var(--gold); opacity: 0.62;
+}
+.hero-avail {
+  font-family: 'Playfair Display', serif; font-size: 10px; font-variant: small-caps;
+  letter-spacing: 0.18em; color: var(--text3); margin-bottom: 30px;
+  animation: fadeUp 700ms 420ms both;
+}
+
+/* CTA row */
+.cta-row {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 44px;
+  animation: fadeUp 700ms 490ms both;
+}
+.cta-primary {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: 'Playfair Display', serif; font-size: 10px; font-variant: small-caps;
+  letter-spacing: 0.18em; color: #fff; background: var(--gold);
+  border: 1px solid var(--gold); border-radius: 3px; padding: 14px 32px;
+  text-decoration: none; animation: pulse 2.5s ease-in-out infinite;
+  transition: background 200ms;
+}
+.cta-primary:hover { background: var(--goldLight); }
+.cta-secondary {
+  font-family: 'Playfair Display', serif; font-size: 10px; font-variant: small-caps;
+  letter-spacing: 0.18em; color: var(--gold); background: transparent;
+  border: 1px solid var(--borderS); border-radius: 3px; padding: 14px 32px;
+  cursor: pointer; text-decoration: none; transition: background 200ms, color 200ms;
+}
+.cta-secondary:hover { background: var(--bg2); }
+
+/* stats */
+.stats {
+  display: flex; justify-content: center; gap: clamp(30px,5vw,68px); flex-wrap: wrap;
+  padding-top: 18px; border-top: 1px solid var(--border);
+  animation: fadeUp 700ms 580ms both;
+}
+.stat-val {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(22px,2.8vw,32px);
+  font-weight: 400; color: var(--gold); line-height: 1;
+}
+.stat-label {
+  font-family: 'Playfair Display', serif; font-size: 7.5px; font-variant: small-caps;
+  letter-spacing: 0.16em; color: var(--text3); margin-top: 5px;
+}
+
+/* scroll hint */
+.scroll-hint {
+  position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+  opacity: 0.42; cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; gap: 4px; z-index: 2;
+}
+.scroll-hint span {
+  font-family: 'Playfair Display', serif; font-size: 7.5px; font-variant: small-caps;
+  letter-spacing: 0.2em; color: var(--gold);
+}
+.scroll-hint svg { animation: float 2s ease-in-out infinite; }
+
+/* ── STARS SVG ── */
+.starfield {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0.12; pointer-events: none; z-index: 0;
+}
+
+/* ── QUI JE SUIS ── */
+.about {
+  padding: clamp(56px,7vw,100px) clamp(20px,5vw,72px);
+  background: var(--bg2); position: relative; overflow: hidden;
+}
+.about-glow {
+  position: absolute; right: -80px; top: -80px; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(160,104,42,0.07), transparent 70%);
+  pointer-events: none;
+}
+.about-grid {
+  max-width: 1020px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(180px,300px) 1fr;
+  gap: clamp(36px,5vw,76px); align-items: center;
+}
+.about-photo-wrap {
+  position: relative;
+}
+.about-photo-inner {
+  width: 100%; aspect-ratio: 3/4; border: 1px solid var(--border);
+  border-radius: 4px; box-shadow: var(--shadow); overflow: hidden; position: relative;
+}
+.about-photo-inner img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+}
+.about-photo-inner .photo-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(245,236,224,0.7) 0%, transparent 40%);
+}
+.corner-tl {
+  position: absolute; top: -10px; left: -10px; width: 30px; height: 30px;
+  border-top: 1.5px solid var(--borderS); border-left: 1.5px solid var(--borderS);
+}
+.corner-br {
+  position: absolute; bottom: -10px; right: -10px; width: 30px; height: 30px;
+  border-bottom: 1.5px solid var(--borderS); border-right: 1.5px solid var(--borderS);
+}
+.about-card {
+  margin-top: 22px; background: var(--bgCard);
+  border: 1px solid var(--border); border-radius: 4px; padding: 14px 18px;
+  box-shadow: var(--shadow);
+}
+.about-card-label {
+  font-family: 'Playfair Display', serif; font-size: 8px; font-variant: small-caps;
+  letter-spacing: 0.2em; color: var(--gold); margin-bottom: 8px;
+}
+.about-card-info {
+  font-family: 'Lato', sans-serif; font-size: 13px; color: var(--text2); line-height: 1.65;
+}
+.about-card-phone {
+  margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
+}
+.about-card-phone a {
+  font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600;
+  letter-spacing: 0.06em; color: var(--gold); text-decoration: none; display: block; margin-bottom: 2px;
+}
+.about-card-phone span {
+  font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 300;
+  color: var(--gold); opacity: 0.7; letter-spacing: 0.06em;
+}
+
+.about-eyebrow {
+  font-family: 'Playfair Display', serif; font-size: 10px; font-variant: small-caps;
+  letter-spacing: 0.28em; color: var(--gold); margin-bottom: 14px;
+}
+.about-h2 {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(26px,3.5vw,46px);
+  font-weight: 300; line-height: 1.15; color: var(--text1); margin-bottom: 16px;
+}
+.about-h2 em { font-style: italic; color: var(--gold); }
+.about-p {
+  font-family: 'Lato', sans-serif; font-size: 15px; font-weight: 300;
+  line-height: 1.85; color: var(--text2); margin-bottom: 18px;
+}
+.about-blockquote {
+  border-left: 2px solid var(--borderS); padding-left: 18px; margin-bottom: 28px;
+  font-family: 'Cormorant Garamond', serif; font-size: 19px; font-style: italic;
+  font-weight: 300; line-height: 1.6; color: var(--text2);
+}
+.about-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.about-list li { display: flex; align-items: flex-start; gap: 10px; }
+.about-list li span.bullet { color: var(--gold); font-size: 8px; flex-shrink: 0; margin-top: 5px; }
+.about-list li span.text {
+  font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 300;
+  color: var(--text2); line-height: 1.5;
+}
+
+/* ── COMMENT ÇA MARCHE (aperçu) ── */
+.steps {
+  padding: clamp(56px,7vw,100px) clamp(20px,5vw,72px);
+  background: var(--bg3);
+}
+.steps-header { text-align: center; margin-bottom: clamp(32px,5vw,54px); }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: clamp(14px,2vw,22px); max-width: 900px; margin: 0 auto 36px;
+}
+.step-card {
+  position: relative; background: var(--bgCard);
+  border: 1px solid var(--border); border-top: 2px solid var(--gold);
+  border-radius: 4px; padding: clamp(20px,2.5vw,32px); box-shadow: var(--shadow);
+}
+.step-num-bg {
+  position: absolute; top: 12px; right: 16px;
+  font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300;
+  color: var(--gold); opacity: 0.12; line-height: 1; pointer-events: none;
+}
+.step-num {
+  font-family: 'Playfair Display', serif; font-size: 9px; font-variant: small-caps;
+  letter-spacing: 0.22em; color: var(--gold); margin-bottom: 10px;
+}
+.step-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400;
+  color: var(--text1); margin-bottom: 10px; line-height: 1.2;
+}
+.step-desc {
+  font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 300;
+  line-height: 1.75; color: var(--text2);
+}
+.steps-cta { text-align: center; }
+
+/* ── FOOTER PREVIEW ── */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--borderS), transparent);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 760px) {
+  nav, .btn-call { display: none; }
+  .about-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="version-badge">Version A — Lumière Dorée</div>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="#">
+    <div class="logo-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a0682a" stroke-width="1.2" stroke-linecap="round">
+        <ellipse cx="12" cy="12" rx="8" ry="5"/>
+        <circle cx="12" cy="12" r="2.5" fill="#a0682a" stroke="none"/>
+        <line x1="12" y1="7" x2="12" y2="4"/>
+        <line x1="12" y1="17" x2="12" y2="20"/>
+        <line x1="4" y1="12" x2="2" y2="12"/>
+        <line x1="20" y1="12" x2="22" y2="12"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-name">medium<span>voyant</span><span style="font-size:11px;color:var(--text3)">.ch</span></div>
+      <div class="logo-sub">Voyance · Suisse</div>
+    </div>
+  </a>
+  <nav>
+    <a href="#">Accueil</a>
+    <a href="#">Qui je suis</a>
+    <a href="#">Méthodes</a>
+    <a href="#">Témoignages</a>
+    <a href="#">FAQ</a>
+  </nav>
+  <a href="tel:0901212212" class="btn-call">Appeler</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Étoiles -->
+  <svg class="starfield" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <circle cx="8"  cy="12" r="0.22" fill="#a0682a" style="animation:float 3.2s ease-in-out infinite"/>
+    <circle cx="23" cy="5"  r="0.15" fill="#a0682a" style="animation:float 2.7s ease-in-out infinite 0.4s"/>
+    <circle cx="45" cy="9"  r="0.28" fill="#a0682a" style="animation:float 3.5s ease-in-out infinite 1.1s"/>
+    <circle cx="67" cy="6"  r="0.18" fill="#a0682a" style="animation:float 2.9s ease-in-out infinite 0.7s"/>
+    <circle cx="82" cy="14" r="0.24" fill="#a0682a" style="animation:float 3.1s ease-in-out infinite 1.5s"/>
+    <circle cx="91" cy="3"  r="0.16" fill="#a0682a" style="animation:float 2.6s ease-in-out infinite 0.2s"/>
+    <circle cx="13" cy="32" r="0.14" fill="#a0682a" style="animation:float 3.4s ease-in-out infinite 1.8s"/>
+    <circle cx="35" cy="28" r="0.2"  fill="#a0682a" style="animation:float 2.8s ease-in-out infinite 0.9s"/>
+    <circle cx="57" cy="22" r="0.17" fill="#a0682a" style="animation:float 3.6s ease-in-out infinite 0.3s"/>
+    <circle cx="75" cy="30" r="0.25" fill="#a0682a" style="animation:float 2.5s ease-in-out infinite 1.3s"/>
+    <circle cx="88" cy="25" r="0.13" fill="#a0682a" style="animation:float 3.3s ease-in-out infinite 1.9s"/>
+    <circle cx="5"  cy="55" r="0.19" fill="#a0682a" style="animation:float 2.9s ease-in-out infinite 0.6s"/>
+    <circle cx="19" cy="68" r="0.23" fill="#a0682a" style="animation:float 3.7s ease-in-out infinite 1.2s"/>
+    <circle cx="41" cy="62" r="0.16" fill="#a0682a" style="animation:float 2.7s ease-in-out infinite 1.6s"/>
+    <circle cx="72" cy="58" r="0.21" fill="#a0682a" style="animation:float 3.0s ease-in-out infinite 0.5s"/>
+    <circle cx="95" cy="72" r="0.18" fill="#a0682a" style="animation:float 2.6s ease-in-out infinite 1.0s"/>
+    <circle cx="60" cy="78" r="0.26" fill="#a0682a" style="animation:float 3.4s ease-in-out infinite 0.8s"/>
+    <circle cx="30" cy="85" r="0.14" fill="#a0682a" style="animation:float 3.1s ease-in-out infinite 1.7s"/>
+    <circle cx="84" cy="88" r="0.20" fill="#a0682a" style="animation:float 2.8s ease-in-out infinite 0.1s"/>
+    <circle cx="50" cy="93" r="0.17" fill="#a0682a" style="animation:float 3.5s ease-in-out infinite 1.4s"/>
+  </svg>
+
+  <!-- Photo en filigrane -->
+  <div class="hero-photo">
+    <img src="images/marco-telephone.jpg.png" alt="" onerror="this.parentNode.style.opacity='0'">
+    <div class="hero-photo-fade"></div>
+  </div>
+  <div class="hero-veil"></div>
+  <div class="hero-gradient-bottom"></div>
+
+  <!-- Contenu -->
+  <div class="hero-content">
+    <div class="eyebrow">✦ &nbsp; Voyance & Médiumnité · Suisse &nbsp; ✦</div>
+
+    <h1 class="hero">Tu cherches une réponse.</h1>
+    <h1 class="line2"><em>Pas un discours.</em></h1>
+
+    <p class="hero-lead">Je te dis ce que je capte. Rien de plus. Tu appelles — on voit ensemble ce qui se présente.</p>
+
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <span class="ornament-dot">◆</span>
+      <div class="ornament-line"></div>
+    </div>
+
+    <div class="hero-phone-row">
+      <a href="tel:0901212212" class="hero-number">0901 212 212</a>
+      <span class="hero-price">CHF 2.– / min.</span>
+    </div>
+    <div class="hero-avail">Disponible 7j/7 · 8h–22h</div>
+
+    <div class="cta-row">
+      <a href="tel:0901212212" class="cta-primary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
+        Appeler maintenant
+      </a>
+      <a href="#" class="cta-secondary">Voir les méthodes</a>
+    </div>
+
+    <div class="stats">
+      <div style="text-align:center">
+        <div class="stat-val">15+</div>
+        <div class="stat-label">Années d'expérience</div>
+      </div>
+      <div style="text-align:center">
+        <div class="stat-val">7j/7</div>
+        <div class="stat-label">Disponibilité</div>
+      </div>
+      <div style="text-align:center">
+        <div class="stat-val">100%</div>
+        <div class="stat-label">Confidentiel</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Découvrir</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a0682a" stroke-width="1.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<!-- QUI JE SUIS -->
+<section class="about">
+  <div class="about-glow"></div>
+  <div class="about-grid">
+    <div class="about-photo-wrap">
+      <div class="about-photo-inner">
+        <img src="images/marco-pendule-amethyste.jpg.png" alt="Médium voyant" onerror="this.style.display='none'">
+        <div class="photo-fade"></div>
+      </div>
+      <div class="corner-tl"></div>
+      <div class="corner-br"></div>
+      <div class="about-card">
+        <div class="about-card-label">Disponibilité</div>
+        <div class="about-card-info">Lun–Dim · 8h00 – 22h00<br>Suisse romande & internationale</div>
+        <div class="about-card-phone">
+          <a href="tel:0901212212">0901 212 212</a>
+          <span>CHF 2.– / min.</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="about-eyebrow">Qui je suis</div>
+      <h2 class="about-h2">Un regard direct.<br><em>Pas de mise en scène.</em></h2>
+      <p class="about-p">Médium de naissance, j'ai grandi avec ce don comme une seconde nature. Pendant des années, j'ai appris à l'affiner — à séparer ce que je perçois de ce que j'imagine. Aujourd'hui, je mets cette clarté au service de ceux qui cherchent de vraies réponses.</p>
+      <p class="about-p">Je travaille par téléphone. Pas de rendez-vous. Pas d'attente. Tu appelles, je capte, je te dis ce qui se présente. Sans fioritures.</p>
+      <blockquote class="about-blockquote">« Je ne te promets pas ce que tu veux entendre. Je te dis ce que je vois. »</blockquote>
+      <ul class="about-list">
+        <li><span class="bullet">◆</span><span class="text">Don héréditaire, pratiqué depuis l'enfance</span></li>
+        <li><span class="bullet">◆</span><span class="text">Plus de 15 ans de consultations</span></li>
+        <li><span class="bullet">◆</span><span class="text">Approche directe, sans discours creux</span></li>
+        <li><span class="bullet">◆</span><span class="text">Confidentialité totale, sans exception</span></li>
+        <li><span class="bullet">◆</span><span class="text">Disponible 7j/7, sans rendez-vous</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMMENT ÇA MARCHE -->
+<section class="steps">
+  <div class="steps-header">
+    <div class="about-eyebrow" style="text-align:center">Le processus</div>
+    <h2 class="about-h2" style="text-align:center">Comment ça <em>marche</em></h2>
+    <p style="font-family:'Lato',sans-serif;font-size:15px;font-weight:300;color:var(--text2);max-width:400px;margin:0 auto">Simple. Direct. Tu n'as besoin de rien préparer.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num-bg">01</div>
+      <div class="step-num">01</div>
+      <div class="step-title">Tu appelles</div>
+      <p class="step-desc">Compose le 0901 212 212. Pas besoin de préparer quoi que ce soit. L'appel est sécurisé, confidentiel, sans engagement.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num-bg">02</div>
+      <div class="step-num">02</div>
+      <div class="step-title">Je capte</div>
+      <p class="step-desc">Dès les premières minutes, je me concentre sur ton énergie. Je perçois ce qui se passe dans ta vie sans que tu aies besoin de tout expliquer.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num-bg">03</div>
+      <div class="step-num">03</div>
+      <div class="step-title">Je te dis</div>
+      <p class="step-desc">Je partage ce que je reçois — clairement, directement. Passé, présent, tendances futures. Tu poses tes questions, j'y réponds honnêtement.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num-bg">04</div>
+      <div class="step-num">04</div>
+      <div class="step-title">Tu avances</div>
+      <p class="step-desc">La consultation se termine quand tu es prêt. Tu raccroches avec des réponses concrètes, pas des formules vagues.</p>
+    </div>
+  </div>
+  <div class="steps-cta">
+    <a href="tel:0901212212" class="cta-primary" style="display:inline-flex">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
+      Essayer maintenant · 0901 212 212
+    </a>
+  </div>
+</section>
+
+<!-- NOTE POLICES -->
+<div style="padding:28px 40px;background:#f0e8d8;border-top:1px solid var(--border);text-align:center">
+  <p style="font-family:'Lato',sans-serif;font-size:12px;color:var(--text3);font-weight:300">
+    <strong style="font-family:'Playfair Display',serif;font-size:13px;color:var(--text2)">Polices Version A :</strong>
+    &nbsp;Titres/Sous-titres → <em style="font-family:'Cormorant Garamond',serif">Cormorant Garamond</em>
+    &nbsp;·&nbsp; Labels/Nav → <span style="font-family:'Playfair Display',serif;font-variant:small-caps">Playfair Display</span>
+    &nbsp;·&nbsp; Corps → Lato
+  </p>
+</div>
+
+</body>
+</html>
