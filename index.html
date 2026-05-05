@@ -711,7 +711,7 @@ const labelStyle = (t) => ({
 });
 
 function BookingForm({ t }) {
-  const EMPTY = { prenom:'', email:'', telephone:'', date:'', heure:'', type:'' };
+  const EMPTY = { prenom:'', telephone:'', date:'', heure:'', type:'' };
   const [form, setForm] = React.useState(EMPTY);
   const [focused, setFocused] = React.useState('');
   const [status, setStatus] = React.useState('idle'); // idle | sending | success | error
@@ -724,11 +724,10 @@ function BookingForm({ t }) {
     setStatus('sending');
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name:        form.prenom,
-        reply_to:         form.email,
-        phone:            form.telephone,
-        appointment_date: form.date,
-        appointment_time: form.heure,
+        from_name:         form.prenom,
+        phone:             form.telephone,
+        appointment_date:  form.date,
+        appointment_time:  form.heure,
         consultation_type: form.type,
       });
       setStatus('success');
@@ -765,22 +764,16 @@ function BookingForm({ t }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
-      {/* Prénom + Email */}
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' }}>
-        <div>
-          <label style={labelStyle(t)}>Prénom *</label>
-          <input type="text" required placeholder="Marie" {...fieldProps('prenom')} />
-        </div>
-        <div>
-          <label style={labelStyle(t)}>Email *</label>
-          <input type="email" required placeholder="marie@exemple.com" {...fieldProps('email')} />
-        </div>
+      {/* Prénom */}
+      <div>
+        <label style={labelStyle(t)}>Prénom *</label>
+        <input type="text" required placeholder="Marie" {...fieldProps('prenom')} />
       </div>
 
       {/* Téléphone */}
       <div>
-        <label style={labelStyle(t)}>Téléphone</label>
-        <input type="tel" placeholder="+41 79 000 00 00" {...fieldProps('telephone')} />
+        <label style={labelStyle(t)}>Téléphone *</label>
+        <input type="tel" required placeholder="+41 79 000 00 00" {...fieldProps('telephone')} />
       </div>
 
       {/* Date + Heure */}
