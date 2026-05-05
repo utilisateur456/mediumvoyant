@@ -300,68 +300,73 @@ const AppHero = ({ t }) => {
   const [vis, setVis] = React.useState(false);
   React.useEffect(() => { const tid = setTimeout(() => setVis(true), 80); return () => clearTimeout(tid); }, []);
   const anim = delay => ({ animation: vis ? `fadeUp 800ms cubic-bezier(0.25,0.46,0.45,0.94) ${delay}ms both` : 'none' });
+
+  // Texte blanc fixe sur la vidéo pour lisibilité maximale
+  const WHITE  = 'oklch(98% 0.005 85)';
+  const GOLD   = t.accent;
+  const MUTED  = 'oklch(80% 0.01 80)';
+  const BORDER = 'oklch(98% 0.005 85 / 0.22)';
+
   return (
-    <section id="accueil" style={{ minHeight:'100vh', display:'flex', flexDirection:'row', background: t.bgPage, position:'relative', overflow:'hidden' }}>
-      <StarField t={t} />
+    <section id="accueil" style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', background:'#0a0806', position:'relative', overflow:'hidden' }}>
 
-      {/* Colonne gauche — texte */}
-      <div style={{ flex:'1 1 55%', display:'flex', flexDirection:'column', justifyContent:'center', padding:'clamp(88px,10vh,110px) clamp(32px,5vw,80px) clamp(52px,6vh,72px)', position:'relative', zIndex:2 }}>
-        <div style={anim(0)}><Eyebrow t={t}>✦ &nbsp; Voyance & Médiumnité · Suisse &nbsp; ✦</Eyebrow></div>
+      {/* ── Vidéo fond plein écran ── */}
+      <video
+        autoPlay muted loop playsInline
+        style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', zIndex:0, pointerEvents:'none' }}
+      >
+        <source src="videos/intro.mp4" type="video/mp4" />
+      </video>
 
-        <h1 style={{ ...anim(110), fontFamily:"'Playfair Display',serif", fontSize:'clamp(36px,4.8vw,68px)', fontWeight:300, lineHeight:1.08, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:0 }}>
+      {/* ── Voile sombre dégradé — lisibilité du texte ── */}
+      <div style={{ position:'absolute', inset:0, zIndex:1, background:'linear-gradient(160deg, rgba(8,5,2,0.62) 0%, rgba(8,5,2,0.45) 50%, rgba(8,5,2,0.70) 100%)' }} />
+      {/* fondu bas vers le fond de page */}
+      <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'160px', zIndex:1, background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
+
+      {/* ── Contenu centré ── */}
+      <div style={{ position:'relative', zIndex:2, maxWidth:'700px', width:'100%', padding:'clamp(88px,10vh,120px) clamp(20px,5vw,48px) clamp(60px,7vh,90px)' }}>
+        <div style={anim(0)}><Eyebrow t={{ ...t, accent: GOLD }}>✦ &nbsp; Voyance & Médiumnité · Suisse &nbsp; ✦</Eyebrow></div>
+
+        <h1 style={{ ...anim(110), fontFamily:"'Playfair Display',serif", fontSize:'clamp(40px,5.6vw,76px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: WHITE, marginBottom:0 }}>
           Tu cherches une réponse.
         </h1>
-        <h1 style={{ ...anim(180), fontFamily:"'Playfair Display',serif", fontSize:'clamp(36px,4.8vw,68px)', fontWeight:300, lineHeight:1.08, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'24px' }}>
-          <em style={{ fontStyle:'italic', color: t.accent }}>Pas un discours.</em>
+        <h1 style={{ ...anim(180), fontFamily:"'Playfair Display',serif", fontSize:'clamp(40px,5.6vw,76px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: WHITE, marginBottom:'24px' }}>
+          <em style={{ fontStyle:'italic', color: GOLD }}>Pas un discours.</em>
         </h1>
 
-        <p style={{ ...anim(260), fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.4vw,16px)', lineHeight:1.85, color: t.textSecondary, maxWidth:'400px', marginBottom:'32px' }}>
+        <p style={{ ...anim(260), fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.5vw,16px)', lineHeight:1.85, color: MUTED, maxWidth:'440px', margin:'0 auto 30px' }}>
           Je te dis ce que je capte. Rien de plus. Tu appelles — on voit ensemble ce qui se présente.
         </p>
 
-        <div style={{ ...anim(340), marginBottom:'32px', display:'flex', justifyContent:'flex-start' }}><Ornament t={t} /></div>
+        <div style={{ ...anim(320), marginBottom:'30px' }}><Ornament t={{ ...t, accent: GOLD, borderStrong: BORDER }} /></div>
 
         <div style={{ ...anim(400), marginBottom:'6px', animation:'heroPulse 2.6s ease-in-out infinite' }}>
-          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(22px,3vw,46px)', fontWeight:600, letterSpacing:'0.05em', color: t.accent, textDecoration:'none', lineHeight:1, display:'inline-block' }}>0901 212 212</a>
-          <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(16px,2vw,28px)', fontWeight:300, letterSpacing:'0.04em', color: t.accent, opacity:0.6, lineHeight:1, marginLeft:'clamp(8px,1vw,14px)' }}>CHF 2.– / min.</span>
+          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(22px,3vw,48px)', fontWeight:600, letterSpacing:'0.05em', color: GOLD, textDecoration:'none', lineHeight:1 }}>0901 212 212</a>
+          <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(18px,2.2vw,34px)', fontWeight:300, letterSpacing:'0.04em', color: GOLD, opacity:0.6, lineHeight:1, marginLeft:'clamp(8px,1vw,14px)' }}>CHF 2.– / min.</span>
         </div>
-        <div style={{ ...anim(420), fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', letterSpacing:'0.18em', color: t.textMuted, marginBottom:'32px' }}>Disponible 7j/7 · 8h–22h</div>
+        <div style={{ ...anim(420), fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', letterSpacing:'0.18em', color: MUTED, marginBottom:'30px' }}>Disponible 7j/7 · 8h–22h</div>
 
-        <div style={{ ...anim(500), display:'flex', gap:'12px', flexWrap:'wrap', marginBottom:'44px' }}>
-          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:`1px solid ${t.accent}`, borderRadius:'3px', padding:'14px 32px', textDecoration:'none', animation:'btnPulse 2.6s ease-in-out infinite', display:'flex', alignItems:'center', gap:'8px' }}>
+        <div style={{ ...anim(500), display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap', marginBottom:'44px' }}>
+          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: GOLD, border:`1px solid ${GOLD}`, borderRadius:'3px', padding:'14px 34px', textDecoration:'none', animation:'btnPulse 2.6s ease-in-out infinite', display:'flex', alignItems:'center', gap:'8px' }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
             Appeler maintenant
           </a>
-          <button onClick={() => scrollToSection('methodes')} style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, background:'transparent', border:`1px solid ${t.borderStrong}`, borderRadius:'3px', padding:'14px 32px', cursor:'pointer' }}>Voir les méthodes</button>
+          <button onClick={() => scrollToSection('methodes')} style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: WHITE, background:'transparent', border:`1px solid ${BORDER}`, borderRadius:'3px', padding:'14px 34px', cursor:'pointer' }}>Voir les méthodes</button>
         </div>
 
-        <div style={{ ...anim(600), display:'flex', gap:'clamp(24px,4vw,52px)', flexWrap:'wrap', paddingTop:'20px', borderTop:`1px solid ${t.border}` }}>
+        <div style={{ ...anim(600), display:'flex', justifyContent:'center', gap:'clamp(28px,5vw,64px)', flexWrap:'wrap', paddingTop:'18px', borderTop:`1px solid ${BORDER}` }}>
           {[['15+','Années d\'expérience'],['7j/7','Disponibilité'],['100%','Confidentiel']].map(([v,l]) => (
-            <div key={v}>
-              <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(22px,2.5vw,32px)', fontWeight:400, color: t.accent, lineHeight:1 }}>{v}</div>
-              <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.16em', textTransform:'uppercase', color: t.textMuted, marginTop:'5px' }}>{l}</div>
+            <div key={v} style={{ textAlign:'center' }}>
+              <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(22px,2.5vw,32px)', fontWeight:400, color: GOLD, lineHeight:1 }}>{v}</div>
+              <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.16em', textTransform:'uppercase', color: MUTED, marginTop:'5px' }}>{l}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Colonne droite — photo pleine hauteur */}
-      <div className="hero-photo" style={{ flex:'0 0 42%', position:'relative', overflow:'hidden' }}>
-        <img
-          src="images/marco-telephone.jpg.png"
-          alt="Marco, médium voyant"
-          onError={e => { e.target.parentNode.style.display='none'; }}
-          style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center top', display:'block' }}
-        />
-        {/* fondu vers la gauche pour raccorder avec le fond */}
-        <div style={{ position:'absolute', inset:0, background:`linear-gradient(to right, ${t.bgPage} 0%, ${t.bgPage}60 18%, transparent 42%)` }} />
-        {/* fondu bas */}
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'160px', background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
-      </div>
-
-      <div style={{ position:'absolute', bottom:'20px', left:'50%', transform:'translateX(-50%)', opacity:0.38, cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:'4px', zIndex:3 }} onClick={() => scrollToSection('apropos')}>
-        <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent }}>Découvrir</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ animation:'floatDot 2s ease-in-out infinite' }}><polyline points="6 9 12 15 18 9"/></svg>
+      <div style={{ position:'absolute', bottom:'20px', left:'50%', transform:'translateX(-50%)', opacity:0.5, cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:'4px', zIndex:3 }} onClick={() => scrollToSection('apropos')}>
+        <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.18em', textTransform:'uppercase', color: GOLD }}>Découvrir</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.5" strokeLinecap="round" style={{ animation:'floatDot 2s ease-in-out infinite' }}><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </section>
   );
