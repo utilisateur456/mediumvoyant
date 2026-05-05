@@ -15,7 +15,7 @@
 <link rel="shortcut icon" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Josefin+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -23,7 +23,7 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-  body { font-family: 'Jost', sans-serif; overflow-x: hidden; }
+  body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
   button { font-family: inherit; }
   @keyframes heroPulse { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 20px currentColor} }
   @keyframes btnPulse  { 0%,100%{box-shadow:0 0 0 0 oklch(75% 0.12 85/0.5)} 50%{box-shadow:0 0 0 10px oklch(75% 0.12 85/0)} }
@@ -144,21 +144,21 @@ function TweakRadio({ label, value, options, onChange }) {
 // ═══════════════════════════════════════════════════
 const THEMES = {
   clair: {
-    bgPage:    'oklch(97% 0.008 80)',
-    bgSurface: 'oklch(93% 0.012 80)',
-    bgAlt:     'oklch(90% 0.014 80)',
-    bgCard:    'oklch(99% 0.005 80)',
-    bgNav:     'oklch(97% 0.008 80 / 0.92)',
-    textPrimary:   'oklch(16% 0.03 265)',
-    textSecondary: 'oklch(36% 0.03 265)',
-    textMuted:     'oklch(55% 0.02 265)',
-    accent:        'oklch(50% 0.14 55)',
-    accentText:    'oklch(99% 0.005 80)',
-    border:        'oklch(50% 0.14 55 / 0.16)',
-    borderStrong:  'oklch(50% 0.14 55 / 0.42)',
-    shadowCard:    '0 2px 18px oklch(16% 0.03 265 / 0.08)',
-    shadowGold:    '0 0 22px oklch(50% 0.14 55 / 0.18)',
-    starOpacity:   0.10,
+    bgPage:    'oklch(98% 0.012 82)',
+    bgSurface: 'oklch(95% 0.016 82)',
+    bgAlt:     'oklch(92% 0.018 80)',
+    bgCard:    'oklch(100% 0 0)',
+    bgNav:     'oklch(98% 0.012 82 / 0.94)',
+    textPrimary:   'oklch(14% 0.02 60)',
+    textSecondary: 'oklch(32% 0.022 60)',
+    textMuted:     'oklch(52% 0.018 65)',
+    accent:        'oklch(58% 0.19 72)',
+    accentText:    'oklch(100% 0 0)',
+    border:        'oklch(58% 0.19 72 / 0.18)',
+    borderStrong:  'oklch(58% 0.19 72 / 0.45)',
+    shadowCard:    '0 2px 20px oklch(14% 0.02 60 / 0.07)',
+    shadowGold:    '0 0 24px oklch(58% 0.19 72 / 0.22)',
+    starOpacity:   0.12,
   },
   doux: {
     bgPage:    'oklch(24% 0.04 260)',
@@ -213,11 +213,11 @@ const Ornament = ({ t }) => (
 );
 
 const Eyebrow = ({ t, children }) => (
-  <div style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.26em', textTransform:'uppercase', color: t.accent, marginBottom:'14px' }}>{children}</div>
+  <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.26em', textTransform:'uppercase', color: t.accent, marginBottom:'14px' }}>{children}</div>
 );
 
 const Heading2 = ({ t, children, align='center' }) => (
-  <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(26px,3.5vw,44px)', fontWeight:300, lineHeight:1.15, color: t.textPrimary, marginBottom:'14px', textAlign: align }}>{children}</h2>
+  <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(26px,3.5vw,44px)', fontWeight:300, lineHeight:1.15, color: t.textPrimary, marginBottom:'14px', textAlign: align }}>{children}</h2>
 );
 
 // ═══════════════════════════════════════════════════
@@ -231,7 +231,7 @@ const FloatingCall = ({ t }) => {
     return () => window.removeEventListener('scroll', fn);
   }, []);
   return (
-    <a href="tel:0901212212" className="float-btn" style={{ position:'fixed', bottom:'20px', right:'20px', zIndex:300, display:'flex', alignItems:'center', gap:'10px', background: t.accent, color: t.accentText, padding:'12px 22px', borderRadius:'40px', textDecoration:'none', boxShadow:'0 4px 24px rgba(0,0,0,0.25)', fontFamily:"'Cinzel',serif", fontSize:'11px', fontWeight:600, letterSpacing:'0.12em', transition:'transform 300ms, opacity 300ms', transform: show ? 'translateY(0)' : 'translateY(80px)', opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', animation: show ? 'btnPulse 2.5s ease-in-out infinite' : 'none' }}>
+    <a href="tel:0901212212" className="float-btn" style={{ position:'fixed', bottom:'20px', right:'20px', zIndex:300, display:'flex', alignItems:'center', gap:'10px', background: t.accent, color: t.accentText, padding:'12px 22px', borderRadius:'40px', textDecoration:'none', boxShadow:'0 4px 24px rgba(0,0,0,0.25)', fontFamily:"'Josefin Sans',sans-serif", fontSize:'11px', fontWeight:600, letterSpacing:'0.12em', transition:'transform 300ms, opacity 300ms', transform: show ? 'translateY(0)' : 'translateY(80px)', opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', animation: show ? 'btnPulse 2.5s ease-in-out infinite' : 'none' }}>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
       0901 212 212 <span className="price" style={{ opacity:0.75, fontWeight:300 }}>· CHF 2.– / min.</span>
     </a>
@@ -265,16 +265,16 @@ const AppHeader = ({ t, activeSection }) => {
           </svg>
         </div>
         <div>
-          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'17px', fontWeight:300, fontStyle:'italic', color: t.textPrimary, lineHeight:1 }}>medium<span style={{ color: t.accent }}>voyant</span><span style={{ fontSize:'11px', color: t.textMuted }}>.ch</span></div>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginTop:'2px' }}>Voyance · Suisse</div>
+          <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'17px', fontWeight:300, fontStyle:'italic', color: t.textPrimary, lineHeight:1 }}>medium<span style={{ color: t.accent }}>voyant</span><span style={{ fontSize:'11px', color: t.textMuted }}>.ch</span></div>
+          <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginTop:'2px' }}>Voyance · Suisse</div>
         </div>
       </div>
       <nav className="site-nav" style={{ display:'flex', gap:'22px' }}>
         {links.slice(0,5).map(([id,label]) => (
-          <button key={id} onClick={() => navClick(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'Cinzel',serif", fontSize:'8.5px', fontWeight:500, letterSpacing:'0.14em', textTransform:'uppercase', color: activeSection===id ? t.accent : t.textMuted, borderBottom: activeSection===id ? `1px solid ${t.accent}` : '1px solid transparent', padding:'3px 0', transition:'color 200ms' }}>{label}</button>
+          <button key={id} onClick={() => navClick(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'Josefin Sans',sans-serif", fontSize:'8.5px', fontWeight:500, letterSpacing:'0.14em', textTransform:'uppercase', color: activeSection===id ? t.accent : t.textMuted, borderBottom: activeSection===id ? `1px solid ${t.accent}` : '1px solid transparent', padding:'3px 0', transition:'color 200ms' }}>{label}</button>
         ))}
       </nav>
-      <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'9.5px', fontWeight:500, letterSpacing:'0.16em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'9px 20px', textDecoration:'none', whiteSpace:'nowrap' }}>Appeler</a>
+      <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'9.5px', fontWeight:500, letterSpacing:'0.16em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'9px 20px', textDecoration:'none', whiteSpace:'nowrap' }}>Appeler</a>
     </header>
   );
 };
@@ -324,14 +324,14 @@ const AppHero = ({ t }) => {
       <div style={{ position:'relative', zIndex:2, maxWidth:'680px', width:'100%' }}>
         <div style={anim(0)}><Eyebrow t={t}>✦ &nbsp; Voyance & Médiumnité · Suisse &nbsp; ✦</Eyebrow></div>
 
-        <h1 style={{ ...anim(110), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(40px,5.6vw,74px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:0 }}>
+        <h1 style={{ ...anim(110), fontFamily:"'Playfair Display',serif", fontSize:'clamp(40px,5.6vw,74px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:0 }}>
           Tu cherches une réponse.
         </h1>
-        <h1 style={{ ...anim(180), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(40px,5.6vw,74px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'22px' }}>
+        <h1 style={{ ...anim(180), fontFamily:"'Playfair Display',serif", fontSize:'clamp(40px,5.6vw,74px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'22px' }}>
           <em style={{ fontStyle:'italic', color: t.accent }}>Pas un discours.</em>
         </h1>
 
-        <p style={{ ...anim(260), fontFamily:"'Jost',sans-serif", fontSize:'clamp(14px,1.5vw,16px)', lineHeight:1.85, color: t.textSecondary, maxWidth:'440px', margin:'0 auto 28px' }}>
+        <p style={{ ...anim(260), fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.5vw,16px)', lineHeight:1.85, color: t.textSecondary, maxWidth:'440px', margin:'0 auto 28px' }}>
           Je te dis ce que je capte. Rien de plus. Tu appelles — on voit ensemble ce qui se présente.
         </p>
 
@@ -339,31 +339,31 @@ const AppHero = ({ t }) => {
 
         {/* Numéro + prix — même ligne, même taille, centré */}
         <div style={{ ...anim(400), marginBottom:'6px', animation:'heroPulse 2.6s ease-in-out infinite' }}>
-          <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'clamp(20px,3vw,44px)', fontWeight:600, letterSpacing:'0.05em', color: t.accent, textDecoration:'none', lineHeight:1 }}>0901 212 212</a>
-          <span style={{ fontFamily:"'Cinzel',serif", fontSize:'clamp(20px,3vw,44px)', fontWeight:300, letterSpacing:'0.04em', color: t.accent, opacity:0.65, lineHeight:1, margin:'0 0 0 clamp(8px,1.2vw,16px)' }}>CHF 2.– / min.</span>
+          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(20px,3vw,44px)', fontWeight:600, letterSpacing:'0.05em', color: t.accent, textDecoration:'none', lineHeight:1 }}>0901 212 212</a>
+          <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(20px,3vw,44px)', fontWeight:300, letterSpacing:'0.04em', color: t.accent, opacity:0.65, lineHeight:1, margin:'0 0 0 clamp(8px,1.2vw,16px)' }}>CHF 2.– / min.</span>
         </div>
-        <div style={{ ...anim(420), fontFamily:"'Cinzel',serif", fontSize:'10px', letterSpacing:'0.16em', color: t.textMuted, marginBottom:'28px' }}>Disponible 7j/7 · 8h–22h</div>
+        <div style={{ ...anim(420), fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', letterSpacing:'0.16em', color: t.textMuted, marginBottom:'28px' }}>Disponible 7j/7 · 8h–22h</div>
 
         <div style={{ ...anim(500), display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap', marginBottom:'42px' }}>
-          <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:`1px solid ${t.accent}`, borderRadius:'3px', padding:'13px 30px', textDecoration:'none', animation:'btnPulse 2.6s ease-in-out infinite', display:'flex', alignItems:'center', gap:'8px' }}>
+          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:`1px solid ${t.accent}`, borderRadius:'3px', padding:'13px 30px', textDecoration:'none', animation:'btnPulse 2.6s ease-in-out infinite', display:'flex', alignItems:'center', gap:'8px' }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
             Appeler maintenant
           </a>
-          <button onClick={() => scrollToSection('methodes')} style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, background:'transparent', border:`1px solid ${t.borderStrong}`, borderRadius:'3px', padding:'13px 30px', cursor:'pointer' }}>Voir les méthodes</button>
+          <button onClick={() => scrollToSection('methodes')} style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, background:'transparent', border:`1px solid ${t.borderStrong}`, borderRadius:'3px', padding:'13px 30px', cursor:'pointer' }}>Voir les méthodes</button>
         </div>
 
         <div style={{ ...anim(600), display:'flex', justifyContent:'center', gap:'clamp(28px,5vw,64px)', flexWrap:'wrap', paddingTop:'16px', borderTop:`1px solid ${t.border}` }}>
           {[['15+','Années d\'expérience'],['7j/7','Disponibilité'],['100%','Confidentiel']].map(([v,l]) => (
             <div key={v} style={{ textAlign:'center' }}>
-              <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(20px,2.5vw,30px)', fontWeight:400, color: t.accent, lineHeight:1 }}>{v}</div>
-              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.14em', textTransform:'uppercase', color: t.textMuted, marginTop:'5px' }}>{l}</div>
+              <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(20px,2.5vw,30px)', fontWeight:400, color: t.accent, lineHeight:1 }}>{v}</div>
+              <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.14em', textTransform:'uppercase', color: t.textMuted, marginTop:'5px' }}>{l}</div>
             </div>
           ))}
         </div>
       </div>
 
       <div style={{ position:'absolute', bottom:'20px', left:'50%', transform:'translateX(-50%)', opacity:0.38, cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:'4px', zIndex:2 }} onClick={() => scrollToSection('apropos')}>
-        <span style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent }}>Découvrir</span>
+        <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent }}>Découvrir</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ animation:'floatDot 2s ease-in-out infinite' }}><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </section>
@@ -385,24 +385,24 @@ const AppAbout = ({ t }) => (
         <div style={{ position:'absolute', top:'-8px', left:'-8px', width:'28px', height:'28px', borderTop:`1.5px solid ${t.borderStrong}`, borderLeft:`1.5px solid ${t.borderStrong}` }} />
         <div style={{ position:'absolute', bottom:'-8px', right:'-8px', width:'28px', height:'28px', borderBottom:`1.5px solid ${t.borderStrong}`, borderRight:`1.5px solid ${t.borderStrong}` }} />
         <div style={{ marginTop:'20px', background: t.bgCard, border:`1px solid ${t.border}`, borderRadius:'4px', padding:'14px 16px', boxShadow: t.shadowCard }}>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, marginBottom:'8px' }}>Disponibilité</div>
-          <div style={{ fontFamily:"'Jost',sans-serif", fontSize:'13px', color: t.textSecondary, lineHeight:1.6 }}>Lun–Dim · 8h00 – 22h00<br />Suisse romande & internationale</div>
+          <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8px', letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, marginBottom:'8px' }}>Disponibilité</div>
+          <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', color: t.textSecondary, lineHeight:1.6 }}>Lun–Dim · 8h00 – 22h00<br />Suisse romande & internationale</div>
           <div style={{ marginTop:'10px', paddingTop:'10px', borderTop:`1px solid ${t.border}` }}>
-            <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', fontWeight:600, letterSpacing:'0.06em', color: t.accent, textDecoration:'none' }}>0901 212 212</a>
-            <div style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', fontWeight:300, color: t.accent, opacity:0.7, marginTop:'2px', letterSpacing:'0.06em' }}>CHF 2.– / min.</div>
+            <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'13px', fontWeight:600, letterSpacing:'0.06em', color: t.accent, textDecoration:'none' }}>0901 212 212</a>
+            <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'13px', fontWeight:300, color: t.accent, opacity:0.7, marginTop:'2px', letterSpacing:'0.06em' }}>CHF 2.– / min.</div>
           </div>
         </div>
       </div>
       <div>
         <Eyebrow t={t}>Qui je suis</Eyebrow>
         <Heading2 t={t} align="left">Un regard direct.<br /><em style={{ fontStyle:'italic', color: t.accent }}>Pas de mise en scène.</em></Heading2>
-        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.8, color: t.textSecondary, marginBottom:'16px' }}>
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.8, color: t.textSecondary, marginBottom:'16px' }}>
           Médium de naissance, j'ai grandi avec ce don comme une seconde nature. Pendant des années, j'ai appris à l'affiner — à séparer ce que je perçois de ce que j'imagine. Aujourd'hui, je mets cette clarté au service de ceux qui cherchent de vraies réponses.
         </p>
-        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.8, color: t.textSecondary, marginBottom:'24px' }}>
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.8, color: t.textSecondary, marginBottom:'24px' }}>
           Je travaille par téléphone. Pas de rendez-vous. Pas d'attente. Tu appelles, je capte, je te dis ce qui se présente. Sans fioritures.
         </p>
-        <blockquote style={{ borderLeft:`2px solid ${t.borderStrong}`, paddingLeft:'18px', marginBottom:'28px', fontFamily:"'Cormorant Garamond',serif", fontSize:'19px', fontStyle:'italic', fontWeight:300, lineHeight:1.6, color: t.textSecondary }}>
+        <blockquote style={{ borderLeft:`2px solid ${t.borderStrong}`, paddingLeft:'18px', marginBottom:'28px', fontFamily:"'Playfair Display',serif", fontSize:'19px', fontStyle:'italic', fontWeight:300, lineHeight:1.6, color: t.textSecondary }}>
           « Je ne te promets pas ce que tu veux entendre. Je te dis ce que je vois. »
         </blockquote>
         <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:'10px' }}>
@@ -416,7 +416,7 @@ const AppAbout = ({ t }) => (
           ].map(q => (
             <li key={q} style={{ display:'flex', alignItems:'flex-start', gap:'10px' }}>
               <span style={{ color: t.accent, fontSize:'8px', flexShrink:0, marginTop:'5px' }}>◆</span>
-              <span style={{ fontFamily:"'Jost',sans-serif", fontSize:'13.5px', color: t.textSecondary, lineHeight:1.5 }}>{q}</span>
+              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13.5px', color: t.textSecondary, lineHeight:1.5 }}>{q}</span>
             </li>
           ))}
         </ul>
@@ -445,22 +445,22 @@ const AppHowItWorks = ({ t }) => {
         <div>
           <Eyebrow t={t}>Le processus</Eyebrow>
           <Heading2 t={t} align="left">Comment ça <em style={{ fontStyle:'italic', color: t.accent }}>marche</em></Heading2>
-          <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary }}>Simple. Direct. Tu n'as besoin de rien préparer.</p>
+          <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary }}>Simple. Direct. Tu n'as besoin de rien préparer.</p>
         </div>
       </div>
       <div style={{ maxWidth:'900px', margin:'0 auto', display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(190px,1fr))', gap:'clamp(12px,2vw,20px)' }}>
         {steps.map((s,i) => (
           <div key={i} style={{ position:'relative', background: t.bgCard, border:`1px solid ${t.border}`, borderTop:`2px solid ${t.accent}`, borderRadius:'4px', padding:'clamp(20px,2.5vw,32px)', boxShadow: t.shadowCard }}>
-            <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'52px', fontWeight:300, lineHeight:1, color: t.accent, opacity:0.18, position:'absolute', top:'12px', right:'16px', pointerEvents:'none' }}>{s.n}</div>
-            <div style={{ fontFamily:"'Cinzel',serif", fontSize:'9px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'10px' }}>{s.n}</div>
-            <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'22px', fontWeight:400, color: t.textPrimary, marginBottom:'10px', lineHeight:1.2 }}>{s.title}</h3>
-            <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'13px', lineHeight:1.7, color: t.textSecondary }}>{s.desc}</p>
+            <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'52px', fontWeight:300, lineHeight:1, color: t.accent, opacity:0.18, position:'absolute', top:'12px', right:'16px', pointerEvents:'none' }}>{s.n}</div>
+            <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'9px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'10px' }}>{s.n}</div>
+            <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:'22px', fontWeight:400, color: t.textPrimary, marginBottom:'10px', lineHeight:1.2 }}>{s.title}</h3>
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', lineHeight:1.7, color: t.textSecondary }}>{s.desc}</p>
             {i < steps.length-1 && <div style={{ display:'none' }} />}
           </div>
         ))}
       </div>
       <div style={{ textAlign:'center', marginTop:'clamp(28px,4vw,44px)' }}>
-        <a href="tel:0901212212" style={{ display:'inline-flex', alignItems:'center', gap:'9px', fontFamily:"'Cinzel',serif", fontSize:'10.5px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'13px 34px', textDecoration:'none', animation:'btnPulse 2.5s ease-in-out infinite' }}>
+        <a href="tel:0901212212" style={{ display:'inline-flex', alignItems:'center', gap:'9px', fontFamily:"'Josefin Sans',sans-serif", fontSize:'10.5px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'13px 34px', textDecoration:'none', animation:'btnPulse 2.5s ease-in-out infinite' }}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
           Essayer maintenant · 0901 212 212
         </a>
@@ -551,27 +551,27 @@ const AppMethodes = ({ t }) => {
       <div style={{ textAlign:'center', marginBottom:'clamp(32px,5vw,52px)' }}>
         <Eyebrow t={t}>Les approches</Eyebrow>
         <Heading2 t={t}>Cinq méthodes.<br /><em style={{ fontStyle:'italic', color: t.accent }}>Une seule intention.</em></Heading2>
-        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary, maxWidth:'440px', margin:'0 auto' }}>Chaque méthode a sa logique. En 5 secondes, tu comprends comment elle fonctionne.</p>
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary, maxWidth:'440px', margin:'0 auto' }}>Chaque méthode a sa logique. En 5 secondes, tu comprends comment elle fonctionne.</p>
       </div>
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:'14px', maxWidth:'1060px', margin:'0 auto' }}>
         {METHODES.map((m,i) => (
           <div key={i} onClick={() => setActive(active===i?null:i)} style={{ background: active===i ? t.bgCard : t.bgSurface, border:`1px solid ${active===i ? t.borderStrong : t.border}`, borderTop:`2px solid ${active===i ? t.accent : t.border}`, borderRadius:'4px', padding:'clamp(18px,2.5vw,28px)', boxShadow: active===i ? `${t.shadowCard},${t.shadowGold}` : t.shadowCard, transform: active===i ? 'translateY(-3px)' : 'none', transition:'all 280ms ease', cursor:'pointer' }}>
             <div style={{ color: t.accent, marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px' }}>
               {m.icon}
-              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8.5px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent }}>{m.label}</div>
+              <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8.5px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent }}>{m.label}</div>
             </div>
-            <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'21px', fontWeight:400, color: t.textPrimary, marginBottom:'10px', lineHeight:1.2 }}>{m.title}</h3>
-            <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'13px', lineHeight:1.7, color: t.textSecondary }}>{m.desc}</p>
+            <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:'21px', fontWeight:400, color: t.textPrimary, marginBottom:'10px', lineHeight:1.2 }}>{m.title}</h3>
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', lineHeight:1.7, color: t.textSecondary }}>{m.desc}</p>
             {active===i && (
               <div style={{ marginTop:'14px', paddingTop:'12px', borderTop:`1px solid ${t.border}` }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
                   <span style={{ color: t.accent, fontSize:'8px' }}>◆</span>
-                  <span style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', color: t.textMuted, fontStyle:'italic' }}>{m.detail}</span>
+                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color: t.textMuted, fontStyle:'italic' }}>{m.detail}</span>
                 </div>
               </div>
             )}
             <div style={{ marginTop:'12px', display:'flex', alignItems:'center', gap:'5px', opacity:0.5 }}>
-              <span style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.accent }}>{active===i ? 'Réduire' : 'En savoir plus'}</span>
+              <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.accent }}>{active===i ? 'Réduire' : 'En savoir plus'}</span>
               <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ transform: active===i ? 'rotate(180deg)' : 'none', transition:'transform 200ms' }}><polyline points="2 4 6 8 10 4"/></svg>
             </div>
           </div>
@@ -602,18 +602,18 @@ const AppTestimonials = ({ t }) => {
     <section id="temoignages" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgSurface, textAlign:'center' }}>
       <Eyebrow t={t}>Ce qu'ils disent</Eyebrow>
       <Heading2 t={t}>Des témoignages <em style={{ fontStyle:'italic', color: t.accent }}>vrais</em></Heading2>
-      <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'14px', lineHeight:1.7, color: t.textMuted, maxWidth:'380px', margin:'0 auto 40px' }}>Pas de mise en scène. Des mots d'appelants réels.</p>
+      <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'14px', lineHeight:1.7, color: t.textMuted, maxWidth:'380px', margin:'0 auto 40px' }}>Pas de mise en scène. Des mots d'appelants réels.</p>
       <div style={{ maxWidth:'660px', margin:'0 auto' }}>
         <div style={{ background: t.bgCard, border:`1px solid ${t.border}`, borderRadius:'4px', padding:'clamp(24px,4vw,48px)', boxShadow: t.shadowCard, opacity: fading?0:1, transform: fading?'translateY(6px)':'none', transition:'opacity 220ms,transform 220ms', position:'relative', minHeight:'220px' }}>
-          <div style={{ position:'absolute', top:'14px', left:'22px', fontFamily:"'Cormorant Garamond',serif", fontSize:'72px', fontWeight:300, color: t.accent, opacity:0.10, lineHeight:1, pointerEvents:'none' }}>"</div>
+          <div style={{ position:'absolute', top:'14px', left:'22px', fontFamily:"'Playfair Display',serif", fontSize:'72px', fontWeight:300, color: t.accent, opacity:0.10, lineHeight:1, pointerEvents:'none' }}>"</div>
           <div style={{ color: t.accent, fontSize:'12px', letterSpacing:'4px', marginBottom:'20px' }}>{'★'.repeat(tm.stars)}</div>
-          <p style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(15px,2vw,20px)', fontStyle:'italic', fontWeight:300, lineHeight:1.65, color: t.textSecondary, marginBottom:'24px' }}>« {tm.quote} »</p>
+          <p style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(15px,2vw,20px)', fontStyle:'italic', fontWeight:300, lineHeight:1.65, color: t.textSecondary, marginBottom:'24px' }}>« {tm.quote} »</p>
           <div style={{ height:'1px', background: t.border, marginBottom:'18px' }} />
           <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'12px' }}>
-            <div style={{ width:'38px', height:'38px', borderRadius:'50%', background: t.bgSurface, border:`1px solid ${t.border}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Cormorant Garamond',serif", fontSize:'16px', fontStyle:'italic', color: t.accent }}>{tm.name[0]}</div>
+            <div style={{ width:'38px', height:'38px', borderRadius:'50%', background: t.bgSurface, border:`1px solid ${t.border}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Playfair Display',serif", fontSize:'16px', fontStyle:'italic', color: t.accent }}>{tm.name[0]}</div>
             <div style={{ textAlign:'left' }}>
-              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase', color: t.textPrimary }}>{tm.name}</div>
-              <div style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', color: t.textMuted, marginTop:'2px' }}>{tm.city}, Suisse</div>
+              <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase', color: t.textPrimary }}>{tm.name}</div>
+              <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color: t.textMuted, marginTop:'2px' }}>{tm.city}, Suisse</div>
             </div>
           </div>
         </div>
@@ -645,12 +645,12 @@ const FaqItem = ({ t, item }) => {
   return (
     <div style={{ border:`1px solid ${t.border}`, borderRadius:'4px', background: t.bgCard, overflow:'hidden', transition:'box-shadow 200ms', boxShadow: open ? t.shadowGold : 'none' }}>
       <button onClick={() => setOpen(!open)} style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px', padding:'clamp(14px,2vw,20px)', background:'none', border:'none', cursor:'pointer', textAlign:'left' }}>
-        <span style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(14px,1.8vw,18px)', fontWeight:400, color: t.textPrimary, lineHeight:1.35 }}>{item.q}</span>
+        <span style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(14px,1.8vw,18px)', fontWeight:400, color: t.textPrimary, lineHeight:1.35 }}>{item.q}</span>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ flexShrink:0, transform: open ? 'rotate(180deg)' : 'none', transition:'transform 220ms' }}><polyline points="2 4 7 10 12 4"/></svg>
       </button>
       {open && (
         <div style={{ padding:'0 clamp(14px,2vw,20px) clamp(14px,2vw,20px)', borderTop:`1px solid ${t.border}` }}>
-          <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'14px', lineHeight:1.75, color: t.textSecondary, paddingTop:'14px' }}>{item.a}</p>
+          <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'14px', lineHeight:1.75, color: t.textSecondary, paddingTop:'14px' }}>{item.a}</p>
         </div>
       )}
     </div>
@@ -692,7 +692,7 @@ const inputStyle = (t, focused) => ({
   border: `1px solid ${focused ? t.borderStrong : t.border}`,
   borderRadius: '3px',
   padding: '11px 14px',
-  fontFamily: "'Jost',sans-serif",
+  fontFamily: "'DM Sans',sans-serif",
   fontSize: '14px',
   color: t.textPrimary,
   outline: 'none',
@@ -702,7 +702,7 @@ const inputStyle = (t, focused) => ({
 
 const labelStyle = (t) => ({
   display: 'block',
-  fontFamily: "'Cinzel',serif",
+  fontFamily: "'Josefin Sans',sans-serif",
   fontSize: '8px',
   letterSpacing: '0.18em',
   textTransform: 'uppercase',
@@ -748,13 +748,13 @@ function BookingForm({ t }) {
     return (
       <div style={{ textAlign:'center', padding:'40px 20px' }}>
         <div style={{ color: t.accent, fontSize:'28px', marginBottom:'14px' }}>◆</div>
-        <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'22px', fontWeight:300, color: t.textPrimary, marginBottom:'10px' }}>
+        <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'22px', fontWeight:300, color: t.textPrimary, marginBottom:'10px' }}>
           Demande envoyée
         </div>
-        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'13px', color: t.textSecondary, lineHeight:1.7 }}>
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', color: t.textSecondary, lineHeight:1.7 }}>
           Je reviens vers toi très bientôt au numéro indiqué.
         </p>
-        <button onClick={() => setStatus('idle')} style={{ marginTop:'20px', background:'none', border:`1px solid ${t.border}`, borderRadius:'3px', padding:'9px 22px', color: t.textMuted, fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>
+        <button onClick={() => setStatus('idle')} style={{ marginTop:'20px', background:'none', border:`1px solid ${t.border}`, borderRadius:'3px', padding:'9px 22px', color: t.textMuted, fontFamily:"'Josefin Sans',sans-serif", fontSize:'8px', letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>
           Nouvelle demande
         </button>
       </div>
@@ -798,12 +798,12 @@ function BookingForm({ t }) {
       </div>
 
       {status === 'error' && (
-        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', color:'oklch(55% 0.18 25)', textAlign:'center' }}>
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color:'oklch(55% 0.18 25)', textAlign:'center' }}>
           Une erreur s'est produite. Réessaie ou appelle directement le 0901 212 212.
         </p>
       )}
 
-      <button type="submit" disabled={status === 'sending'} style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'9px', fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:'none', borderRadius:'3px', padding:'14px 28px', cursor: status === 'sending' ? 'wait' : 'pointer', opacity: status === 'sending' ? 0.7 : 1, transition:'opacity 200ms' }}>
+      <button type="submit" disabled={status === 'sending'} style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'9px', fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:'none', borderRadius:'3px', padding:'14px 28px', cursor: status === 'sending' ? 'wait' : 'pointer', opacity: status === 'sending' ? 0.7 : 1, transition:'opacity 200ms' }}>
         {status === 'sending' ? 'Envoi en cours…' : (
           <>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -824,19 +824,19 @@ const AppContact = ({ t }) => (
       {/* Colonne gauche — CTA téléphone */}
       <div style={{ textAlign:'left' }}>
         <Eyebrow t={t}>✦ &nbsp; Consultation immédiate &nbsp; ✦</Eyebrow>
-        <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(26px,4vw,52px)', fontWeight:300, lineHeight:1.1, color: t.textPrimary, marginBottom:'14px' }}>
+        <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(26px,4vw,52px)', fontWeight:300, lineHeight:1.1, color: t.textPrimary, marginBottom:'14px' }}>
           Tu appelles.<br /><em style={{ fontStyle:'italic', color: t.accent }}>On voit ensemble.</em>
         </h2>
-        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary, marginBottom:'28px' }}>
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary, marginBottom:'28px' }}>
           Pas de rendez-vous. Pas d'attente. Disponible maintenant.
         </p>
         <div style={{ marginBottom:'24px' }}><Ornament t={t} /></div>
         <div style={{ animation:'heroPulse 2.5s ease-in-out infinite', marginBottom:'6px' }}>
-          <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'clamp(22px,3.5vw,40px)', fontWeight:600, letterSpacing:'0.07em', color: t.accent, textDecoration:'none', display:'block', lineHeight:1.1 }}>0901 212 212</a>
-          <span style={{ fontFamily:"'Cinzel',serif", fontSize:'clamp(16px,2.2vw,26px)', fontWeight:300, letterSpacing:'0.04em', color: t.accent, opacity:0.7 }}>CHF 2.– / min.</span>
+          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(22px,3.5vw,40px)', fontWeight:600, letterSpacing:'0.07em', color: t.accent, textDecoration:'none', display:'block', lineHeight:1.1 }}>0901 212 212</a>
+          <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(16px,2.2vw,26px)', fontWeight:300, letterSpacing:'0.04em', color: t.accent, opacity:0.7 }}>CHF 2.– / min.</span>
         </div>
-        <div style={{ fontFamily:"'Cinzel',serif", fontSize:'11px', letterSpacing:'0.14em', color: t.textMuted, marginBottom:'26px' }}>Suisse · 7j/7 · 8h–22h</div>
-        <a href="tel:0901212212" style={{ display:'inline-flex', alignItems:'center', gap:'10px', fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'13px 28px', textDecoration:'none', animation:'btnPulse 2.5s ease-in-out infinite' }}>
+        <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'11px', letterSpacing:'0.14em', color: t.textMuted, marginBottom:'26px' }}>Suisse · 7j/7 · 8h–22h</div>
+        <a href="tel:0901212212" style={{ display:'inline-flex', alignItems:'center', gap:'10px', fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'13px 28px', textDecoration:'none', animation:'btnPulse 2.5s ease-in-out infinite' }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
           Appeler maintenant
         </a>
@@ -844,7 +844,7 @@ const AppContact = ({ t }) => (
           {['Paiement sur facture','Confidentiel','Sans engagement'].map(l => (
             <div key={l} style={{ display:'flex', alignItems:'center', gap:'6px' }}>
               <span style={{ color: t.accent, fontSize:'8px' }}>◆</span>
-              <span style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.textMuted }}>{l}</span>
+              <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.textMuted }}>{l}</span>
             </div>
           ))}
         </div>
@@ -852,11 +852,11 @@ const AppContact = ({ t }) => (
 
       {/* Colonne droite — Formulaire de réservation */}
       <div style={{ background: t.bgCard, border:`1px solid ${t.border}`, borderRadius:'4px', padding:'clamp(22px,3vw,36px)', boxShadow: t.shadowCard }}>
-        <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8.5px', letterSpacing:'0.22em', textTransform:'uppercase', color: t.accent, marginBottom:'6px' }}>Ou réserver par email</div>
-        <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(18px,2.2vw,24px)', fontWeight:300, color: t.textPrimary, marginBottom:'6px' }}>
+        <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8.5px', letterSpacing:'0.22em', textTransform:'uppercase', color: t.accent, marginBottom:'6px' }}>Ou réserver par email</div>
+        <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(18px,2.2vw,24px)', fontWeight:300, color: t.textPrimary, marginBottom:'6px' }}>
           Demande de consultation
         </div>
-        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'12.5px', color: t.textMuted, lineHeight:1.6, marginBottom:'22px' }}>
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12.5px', color: t.textMuted, lineHeight:1.6, marginBottom:'22px' }}>
           Je te recontacte sous 24h pour confirmer le créneau.
         </p>
         <BookingForm t={t} />
@@ -874,33 +874,33 @@ const AppFooter = ({ t }) => (
     <div style={{ maxWidth:'1020px', margin:'0 auto' }}>
       <div className="footer-grid" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))', gap:'clamp(22px,3vw,44px)', paddingBottom:'24px', borderBottom:`1px solid ${t.border}`, marginBottom:'18px' }}>
         <div>
-          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'19px', fontWeight:300, fontStyle:'italic', color: t.textPrimary, marginBottom:'4px' }}>medium<span style={{ color: t.accent }}>voyant</span><span style={{ fontSize:'12px', color: t.textMuted }}>.ch</span></div>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginBottom:'10px' }}>Voyance · Suisse</div>
-          <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', lineHeight:1.65, color: t.textMuted }}>Consultation de voyance par téléphone. Guidance sincère, disponible dans toute la Suisse. 7j/7.</p>
+          <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'19px', fontWeight:300, fontStyle:'italic', color: t.textPrimary, marginBottom:'4px' }}>medium<span style={{ color: t.accent }}>voyant</span><span style={{ fontSize:'12px', color: t.textMuted }}>.ch</span></div>
+          <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginBottom:'10px' }}>Voyance · Suisse</div>
+          <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', lineHeight:1.65, color: t.textMuted }}>Consultation de voyance par téléphone. Guidance sincère, disponible dans toute la Suisse. 7j/7.</p>
         </div>
         <div>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Navigation</div>
+          <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Navigation</div>
           <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:'7px' }}>
             {[['accueil','Accueil'],['apropos','Qui je suis'],['methodes','Les méthodes'],['comment','Comment ça marche'],['temoignages','Témoignages'],['faq','FAQ'],['contact','Contact']].map(([id,l]) => (
-              <li key={id}><button onClick={() => scrollToSection(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'Jost',sans-serif", fontSize:'12px', color: t.textMuted, padding:0 }}>{l}</button></li>
+              <li key={id}><button onClick={() => scrollToSection(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color: t.textMuted, padding:0 }}>{l}</button></li>
             ))}
           </ul>
         </div>
         <div>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Contact</div>
-          <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'15px', fontWeight:600, letterSpacing:'0.06em', color: t.accent, textDecoration:'none', display:'block', marginBottom:'2px' }}>0901 212 212</a>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'15px', fontWeight:300, letterSpacing:'0.06em', color: t.accent, opacity:0.7, marginBottom:'10px' }}>CHF 2.– / min.</div>
-          <div style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', color: t.textMuted, lineHeight:1.6 }}>Disponible 7j/7 · 8h00–22h00<br />Toute la Suisse</div>
+          <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Contact</div>
+          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'15px', fontWeight:600, letterSpacing:'0.06em', color: t.accent, textDecoration:'none', display:'block', marginBottom:'2px' }}>0901 212 212</a>
+          <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'15px', fontWeight:300, letterSpacing:'0.06em', color: t.accent, opacity:0.7, marginBottom:'10px' }}>CHF 2.– / min.</div>
+          <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color: t.textMuted, lineHeight:1.6 }}>Disponible 7j/7 · 8h00–22h00<br />Toute la Suisse</div>
         </div>
         <div>
-          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Mention légale</div>
-          <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'11px', lineHeight:1.65, color: t.textMuted }}>La voyance est un service de guidance personnelle. Elle ne constitue pas une science exacte. Aucun résultat n'est garanti. Pour toute décision importante, consultez également des professionnels qualifiés.</p>
+          <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Mention légale</div>
+          <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'11px', lineHeight:1.65, color: t.textMuted }}>La voyance est un service de guidance personnelle. Elle ne constitue pas une science exacte. Aucun résultat n'est garanti. Pour toute décision importante, consultez également des professionnels qualifiés.</p>
         </div>
       </div>
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'10px' }}>
-        <div style={{ fontFamily:"'Jost',sans-serif", fontSize:'11px', color: t.textMuted }}>© {new Date().getFullYear()} mediumvoyant.ch · Tous droits réservés</div>
+        <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'11px', color: t.textMuted }}>© {new Date().getFullYear()} mediumvoyant.ch · Tous droits réservés</div>
         <div style={{ display:'flex', gap:'18px' }}>
-          {['Confidentialité','CGU','Mentions légales'].map(l => <span key={l} style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.textMuted, cursor:'pointer' }}>{l}</span>)}
+          {['Confidentialité','CGU','Mentions légales'].map(l => <span key={l} style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.textMuted, cursor:'pointer' }}>{l}</span>)}
         </div>
       </div>
     </div>
