@@ -287,32 +287,32 @@ const AppHero = ({ t }) => {
       <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse 60% 90% at 28% 50%, ${t.bgSurface}cc, transparent)` }} />
       <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'160px', background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
 
-      {/* Photo hero — personnage complet ancré en bas à droite */}
-      <div style={{ position:'absolute', right:0, top:0, bottom:0, width:'clamp(280px,48%,640px)', zIndex:1, pointerEvents:'none' }}>
+      {/* Photo hero — droite, pleine hauteur, personnage entier */}
+      <div style={{
+        position:'absolute', right:0, top:0, bottom:0,
+        width:'50%', zIndex:1, overflow:'hidden',
+        display:'flex', alignItems:'flex-end', justifyContent:'center'
+      }}>
         <img
           src="images/marco-telephone.jpg.png"
           alt="Médium voyant en consultation téléphonique"
-          onError={e => { e.target.style.display='none'; }}
+          onError={e => { e.target.parentNode.style.display='none'; }}
           style={{
-            position:'absolute',
-            bottom:0,
-            right:0,
-            height:'96%',
-            width:'auto',
-            maxWidth:'none',
+            width:'100%',
+            height:'100%',
             objectFit:'contain',
-            objectPosition:'bottom right',
+            objectPosition:'center bottom',
             display:'block',
           }}
         />
-        {/* Fondu gauche pour fondre avec le texte */}
-        <div style={{ position:'absolute', inset:0, background:`linear-gradient(to right, ${t.bgPage} 0%, ${t.bgPage}bb 12%, ${t.bgPage}44 32%, transparent 58%)` }} />
-        {/* Fondu bas */}
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'180px', background:`linear-gradient(to top, ${t.bgPage} 0%, transparent 100%)` }} />
+        {/* fondu gauche — transition douce vers le texte */}
+        <div style={{ position:'absolute', inset:0, background:`linear-gradient(to right, ${t.bgPage} 0%, ${t.bgPage}99 8%, ${t.bgPage}22 28%, transparent 52%)` }} />
+        {/* fondu bas */}
+        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'120px', background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
       </div>
 
       {/* Contenu texte */}
-      <div style={{ position:'relative', zIndex:2, maxWidth:'58%', minWidth:'320px', display:'flex', flexDirection:'column', justifyContent:'center', textAlign:'left', padding:'clamp(92px,11vh,130px) clamp(20px,5vw,72px) clamp(56px,7vh,88px)' }}>
+      <div style={{ position:'relative', zIndex:2, width:'50%', minWidth:'320px', display:'flex', flexDirection:'column', justifyContent:'center', textAlign:'left', padding:'clamp(92px,11vh,130px) clamp(20px,4vw,64px) clamp(56px,7vh,88px)' }}>
         <div style={anim(0)}><Eyebrow t={t}>✦ &nbsp; Voyance & Médiumnité · Suisse &nbsp; ✦</Eyebrow></div>
         <h1 style={{ ...anim(130), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(36px,4.8vw,66px)', fontWeight:300, lineHeight:1.08, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'8px' }}>
           Tu cherches une réponse.
