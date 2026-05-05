@@ -270,7 +270,7 @@ const AppHeader = ({ t, activeSection }) => {
         </div>
       </div>
       <nav className="site-nav" style={{ display:'flex', gap:'22px' }}>
-        {links.slice(0,5).map(([id,label]) => (
+        {links.slice(0,7).map(([id,label]) => (
           <button key={id} onClick={() => navClick(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'Josefin Sans',sans-serif", fontSize:'8.5px', fontWeight:500, letterSpacing:'0.14em', textTransform:'uppercase', color: activeSection===id ? t.accent : t.textMuted, borderBottom: activeSection===id ? `1px solid ${t.accent}` : '1px solid transparent', padding:'3px 0', transition:'color 200ms' }}>{label}</button>
         ))}
       </nav>
