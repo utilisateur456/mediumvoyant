@@ -732,7 +732,7 @@ function BookingForm({ t }) {
       });
       setStatus('success');
       setForm(EMPTY);
-    } catch {
+    } catch(err) {
       setStatus('error');
     }
   };
@@ -753,7 +753,7 @@ function BookingForm({ t }) {
           Demande envoyée
         </div>
         <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'13px', color: t.textSecondary, lineHeight:1.7 }}>
-          Je reviens vers toi très bientôt à l'adresse indiquée.
+          Je reviens vers toi très bientôt au numéro indiqué.
         </p>
         <button onClick={() => setStatus('idle')} style={{ marginTop:'20px', background:'none', border:`1px solid ${t.border}`, borderRadius:'3px', padding:'9px 22px', color: t.textMuted, fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.14em', textTransform:'uppercase', cursor:'pointer' }}>
           Nouvelle demande
