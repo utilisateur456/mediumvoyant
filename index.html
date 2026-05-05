@@ -721,14 +721,21 @@ function BookingForm({ t }) {
     e.preventDefault();
     if (status === 'sending') return;
     setStatus('sending');
-    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formRef.current)
-      .then(() => {
-        setStatus('success');
-        formRef.current.reset();
-      })
-      .catch(() => {
-        setStatus('error');
-      });
+    const el = formRef.current.elements;
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      prenom:    el['prenom'].value,
+      email:     el['email'].value,
+      telephone: el['telephone'].value,
+      date:      el['date'].value,
+      heure:     el['heure'].value,
+      type:      el['type'].value,
+      recu_le:   new Date().toLocaleString('fr-CH'),
+    }).then(() => {
+      setStatus('success');
+      formRef.current.reset();
+    }).catch(() => {
+      setStatus('error');
+    });
   };
 
   const focusProps = key => ({
