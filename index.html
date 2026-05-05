@@ -756,14 +756,19 @@ function BookingForm({ t }) {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
-      {/* Champs cachés — remplissent le template automatiquement */}
-      <input type="hidden" name="email" value="" />
+      {/* Champ caché date de réception */}
       <input type="hidden" name="recu_le" value={new Date().toLocaleString('fr-CH')} />
 
-      {/* Prénom */}
-      <div>
-        <label style={labelStyle(t)}>Prénom *</label>
-        <input name="prenom" type="text" required placeholder="Marie" {...focusProps('prenom')} />
+      {/* Prénom + Email */}
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' }}>
+        <div>
+          <label style={labelStyle(t)}>Prénom *</label>
+          <input name="prenom" type="text" required placeholder="Marie" {...focusProps('prenom')} />
+        </div>
+        <div>
+          <label style={labelStyle(t)}>Email *</label>
+          <input name="email" type="email" required placeholder="marie@exemple.com" {...focusProps('email')} />
+        </div>
       </div>
 
       {/* Téléphone */}
@@ -776,20 +781,20 @@ function BookingForm({ t }) {
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' }}>
         <div>
           <label style={labelStyle(t)}>Date souhaitée *</label>
-          <input name="date" type="date" required min={new Date().toISOString().split('T')[0]} {...focusProps('date')} />
+          <input name="date" type="text" required placeholder="jj.mm.aaaa" {...focusProps('date')} />
         </div>
         <div>
           <label style={labelStyle(t)}>Heure souhaitée *</label>
-          <input name="heure" type="time" required min="08:00" max="22:00" {...focusProps('heure')} />
+          <input name="heure" type="text" required placeholder="ex: 14:30" {...focusProps('heure')} />
         </div>
       </div>
 
       {/* Type de consultation */}
       <div>
         <label style={labelStyle(t)}>Type de consultation *</label>
-        <select name="type" required onFocus={() => setFocused('type')} onBlur={() => setFocused('')}
+        <select name="type" defaultValue="" required onFocus={() => setFocused('type')} onBlur={() => setFocused('')}
           style={{ ...inputStyle(t, focused === 'type'), cursor:'pointer', color: t.textPrimary }}>
-          <option value="" disabled selected>Choisir une méthode…</option>
+          <option value="" disabled>Choisir une méthode…</option>
           {CONSULTATION_TYPES.map(c => <option key={c} value={c} style={{ background: t.bgCard, color: t.textPrimary }}>{c}</option>)}
         </select>
       </div>
