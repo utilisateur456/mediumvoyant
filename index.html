@@ -20,7 +20,6 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init({ publicKey: 'liRFAyxBo1908cbzF' });</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
@@ -677,6 +676,7 @@ const AppFAQ = ({ t }) => (
 // ═══════════════════════════════════════════════════
 const EMAILJS_SERVICE_ID = 'service_8pt08ad';
 const EMAILJS_TEMPLATE_ID = 'template_qe0x9k7';
+if (typeof emailjs !== 'undefined') { emailjs.init({ publicKey: 'liRFAyxBo1908cbzF' }); }
 
 const CONSULTATION_TYPES = [
   'Médiumnité pure',
@@ -718,23 +718,22 @@ function BookingForm({ t }) {
 
   const set = k => e => setForm(prev => ({ ...prev, [k]: e.target.value }));
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (status === 'sending') return;
     setStatus('sending');
-    try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name:         form.prenom,
-        phone:             form.telephone,
-        appointment_date:  form.date,
-        appointment_time:  form.heure,
-        consultation_type: form.type,
-      });
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name:         form.prenom,
+      phone:             form.telephone,
+      appointment_date:  form.date,
+      appointment_time:  form.heure,
+      consultation_type: form.type,
+    }).then(() => {
       setStatus('success');
       setForm(EMPTY);
-    } catch(err) {
+    }).catch(() => {
       setStatus('error');
-    }
+    });
   };
 
   const fieldProps = key => ({
