@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediumVoyant.ch — Voyance & Médiumnité en Suisse | 0901 212 212</title>
+<meta name="description" content="Consultation de voyance par téléphone en Suisse. Médium voyant disponible 7j/7. Réponses claires, guidance sincère. Appelez maintenant le 0901 212 212 — CHF 2.- / min.">
+<meta name="keywords" content="voyance suisse, médium, consultation voyance téléphone, médium voyant suisse, guidance, voyance en ligne, médiumnité, numérologie suisse, réponse rapide">
+<meta property="og:title" content="MediumVoyant.ch — Voyance & Médiumnité en Suisse">
+<meta property="og:description" content="Tu cherches une réponse claire. Pas un discours. Appelez le 0901 212 212.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mediumvoyant.ch">
+<link rel="canonical" href="https://mediumvoyant.ch">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Jost', sans-serif; overflow-x: hidden; }
+  button { font-family: inherit; }
+  @keyframes heroPulse { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 20px currentColor} }
+  @keyframes btnPulse  { 0%,100%{box-shadow:0 0 0 0 oklch(75% 0.12 85/0.5)} 50%{box-shadow:0 0 0 10px oklch(75% 0.12 85/0)} }
+  @keyframes fadeUp    { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
+  @keyframes floatDot  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  @keyframes spinSlow  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+// ═══════════════════════════════════════════════════
+// TWEAKS SHELL
+// ═══════════════════════════════════════════════════
+const TWEAKS_CSS = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:9999;width:260px;
+    display:flex;flex-direction:column;max-height:calc(100vh - 32px);
+    background:rgba(250,249,247,.93);color:#29261b;
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 12px 40px rgba(0,0,0,.20);
+    font:11.5px/1.4 ui-sans-serif,system-ui,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.5);
+    width:22px;height:22px;border-radius:6px;cursor:pointer;font-size:13px}
+  .twk-x:hover{background:rgba(0,0,0,.07)}
+  .twk-body{padding:4px 14px 14px;display:flex;flex-direction:column;gap:10px;overflow-y:auto}
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+    color:rgba(41,38,27,.4);padding:6px 0 2px}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-lbl{font-weight:500;color:rgba(41,38,27,.72)}
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.07);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.14);
+    transition:left .15s ease,width .15s ease;pointer-events:none}
+  .twk-seg button{position:relative;z-index:1;flex:1;border:0;background:transparent;
+    color:inherit;font:inherit;font-weight:500;min-height:24px;border-radius:6px;
+    cursor:pointer;padding:3px 4px;line-height:1.2}
+`;
+
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((keyOrObj, val) => {
+    const edits = (typeof keyOrObj === 'object' && keyOrObj !== null) ? keyOrObj : { [keyOrObj]: val };
+    setValues(prev => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+  }, []);
+  return { tweaks: values, setTweak };
+}
+
+function TweaksPanel({ title = 'Tweaks', children }) {
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    const fn = e => {
+      if (e?.data?.type === '__activate_edit_mode') setOpen(true);
+      else if (e?.data?.type === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', fn);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', fn);
+  }, []);
+  const close = () => { setOpen(false); window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); };
+  if (!open) return null;
+  return (
+    <>
+      <style>{TWEAKS_CSS}</style>
+      <div className="twk-panel">
+        <div className="twk-hd"><b>{title}</b><button className="twk-x" onClick={close}>✕</button></div>
+        <div className="twk-body">{children}</div>
+      </div>
+    </>
+  );
+}
+
+function TweakSection({ title, children }) {
+  return <><div className="twk-sect">{title}</div>{children}</>;
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const opts = options.map(o => typeof o === 'object' ? o : { value: o, label: o });
+  const idx = Math.max(0, opts.findIndex(o => o.value === value));
+  const n = opts.length;
+  return (
+    <div className="twk-row">
+      <div className="twk-lbl">{label}</div>
+      <div className="twk-seg">
+        <div className="twk-seg-thumb" style={{ left:`calc(2px + ${idx}*(100% - 4px)/${n})`, width:`calc((100% - 4px)/${n})` }} />
+        {opts.map(o => <button key={o.value} type="button" onClick={() => onChange(o.value)}>{o.label}</button>)}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════
+// THEMES
+// ═══════════════════════════════════════════════════
+const THEMES = {
+  clair: {
+    bgPage:    'oklch(97% 0.008 80)',
+    bgSurface: 'oklch(93% 0.012 80)',
+    bgAlt:     'oklch(90% 0.014 80)',
+    bgCard:    'oklch(99% 0.005 80)',
+    bgNav:     'oklch(97% 0.008 80 / 0.92)',
+    textPrimary:   'oklch(16% 0.03 265)',
+    textSecondary: 'oklch(36% 0.03 265)',
+    textMuted:     'oklch(55% 0.02 265)',
+    accent:        'oklch(50% 0.14 55)',
+    accentText:    'oklch(99% 0.005 80)',
+    border:        'oklch(50% 0.14 55 / 0.16)',
+    borderStrong:  'oklch(50% 0.14 55 / 0.42)',
+    shadowCard:    '0 2px 18px oklch(16% 0.03 265 / 0.08)',
+    shadowGold:    '0 0 22px oklch(50% 0.14 55 / 0.18)',
+    starOpacity:   0.10,
+  },
+  doux: {
+    bgPage:    'oklch(24% 0.04 260)',
+    bgSurface: 'oklch(29% 0.05 260)',
+    bgAlt:     'oklch(20% 0.035 260)',
+    bgCard:    'oklch(29% 0.05 260)',
+    bgNav:     'oklch(19% 0.04 260 / 0.92)',
+    textPrimary:   'oklch(95% 0.01 80)',
+    textSecondary: 'oklch(78% 0.015 260)',
+    textMuted:     'oklch(58% 0.015 260)',
+    accent:        'oklch(76% 0.11 85)',
+    accentText:    'oklch(14% 0.03 265)',
+    border:        'oklch(76% 0.11 85 / 0.18)',
+    borderStrong:  'oklch(76% 0.11 85 / 0.5)',
+    shadowCard:    '0 2px 28px oklch(0% 0 0 / 0.35)',
+    shadowGold:    '0 0 26px oklch(76% 0.11 85 / 0.22)',
+    starOpacity:   0.55,
+  },
+  sombre: {
+    bgPage:    'oklch(10% 0.02 265)',
+    bgSurface: 'oklch(14% 0.035 265)',
+    bgAlt:     'oklch(12% 0.03 265)',
+    bgCard:    'oklch(14% 0.035 265)',
+    bgNav:     'oklch(8% 0.02 265 / 0.92)',
+    textPrimary:   'oklch(96% 0.01 85)',
+    textSecondary: 'oklch(72% 0.015 265)',
+    textMuted:     'oklch(50% 0.015 265)',
+    accent:        'oklch(75% 0.12 85)',
+    accentText:    'oklch(10% 0.02 265)',
+    border:        'oklch(75% 0.12 85 / 0.15)',
+    borderStrong:  'oklch(75% 0.12 85 / 0.5)',
+    shadowCard:    '0 2px 32px oklch(0% 0 0 / 0.55)',
+    shadowGold:    '0 0 28px oklch(75% 0.12 85 / 0.28)',
+    starOpacity:   0.55,
+  },
+};
+
+// ═══════════════════════════════════════════════════
+// SHARED HELPERS
+// ═══════════════════════════════════════════════════
+const scrollTo = id => {
+  const el = document.getElementById(id);
+  if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
+};
+
+const Ornament = ({ t }) => (
+  <div style={{ display:'flex', alignItems:'center', gap:'14px', maxWidth:'220px', margin:'0 auto' }}>
+    <div style={{ flex:1, height:'1px', background: t.borderStrong }} />
+    <span style={{ color: t.accent, fontSize:'10px' }}>◆</span>
+    <div style={{ flex:1, height:'1px', background: t.borderStrong }} />
+  </div>
+);
+
+const Eyebrow = ({ t, children }) => (
+  <div style={{ fontFamily:"'Cinzel',serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.26em', textTransform:'uppercase', color: t.accent, marginBottom:'14px' }}>{children}</div>
+);
+
+const Heading2 = ({ t, children, align='center' }) => (
+  <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(26px,3.5vw,44px)', fontWeight:300, lineHeight:1.15, color: t.textPrimary, marginBottom:'14px', textAlign: align }}>{children}</h2>
+);
+
+// ═══════════════════════════════════════════════════
+// FLOATING CALL BUTTON (mobile sticky)
+// ═══════════════════════════════════════════════════
+const FloatingCall = ({ t }) => {
+  const [show, setShow] = React.useState(false);
+  React.useEffect(() => {
+    const fn = () => setShow(window.scrollY > 300);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+  return (
+    <a href="tel:0901212212" style={{ position:'fixed', bottom:'20px', right:'20px', zIndex:300, display:'flex', alignItems:'center', gap:'10px', background: t.accent, color: t.accentText, padding:'12px 22px', borderRadius:'40px', textDecoration:'none', boxShadow:'0 4px 24px rgba(0,0,0,0.25)', fontFamily:"'Cinzel',serif", fontSize:'11px', fontWeight:600, letterSpacing:'0.12em', transition:'transform 300ms, opacity 300ms', transform: show ? 'translateY(0)' : 'translateY(80px)', opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', animation: show ? 'btnPulse 2.5s ease-in-out infinite' : 'none' }}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
+      0901 212 212
+    </a>
+  );
+};
+
+// ═══════════════════════════════════════════════════
+// HEADER
+// ═══════════════════════════════════════════════════
+const AppHeader = ({ t, activeSection }) => {
+  const [scrolled, setScrolled] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  React.useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+  const links = [['accueil','Accueil'],['apropos','Qui je suis'],['methodes','Méthodes'],['comment','Comment ça marche'],['temoignages','Témoignages'],['faq','FAQ'],['contact','Contact']];
+  const navClick = id => { scrollTo(id); setMobileOpen(false); };
+  return (
+    <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:200, height:'68px', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 clamp(16px,4vw,56px)', background: t.bgNav, backdropFilter:'blur(14px)', WebkitBackdropFilter:'blur(14px)', borderBottom:`1px solid ${t.border}`, boxShadow: scrolled ? t.shadowCard : 'none', transition:'all 300ms ease' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:'10px', cursor:'pointer' }} onClick={() => scrollTo('accueil')}>
+        <div style={{ width:'34px', height:'34px', border:`1px solid ${t.borderStrong}`, borderRadius:'2px', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={t.accent} strokeWidth="1.2" strokeLinecap="round">
+            <ellipse cx="12" cy="12" rx="8" ry="5"/>
+            <circle cx="12" cy="12" r="2.5" fill={t.accent} stroke="none"/>
+            <line x1="12" y1="7" x2="12" y2="4"/>
+            <line x1="12" y1="17" x2="12" y2="20"/>
+            <line x1="4" y1="12" x2="2" y2="12"/>
+            <line x1="20" y1="12" x2="22" y2="12"/>
+          </svg>
+        </div>
+        <div>
+          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'17px', fontWeight:300, fontStyle:'italic', color: t.textPrimary, lineHeight:1 }}>medium<span style={{ color: t.accent }}>voyant</span><span style={{ fontSize:'11px', color: t.textMuted }}>.ch</span></div>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginTop:'2px' }}>Voyance · Suisse</div>
+        </div>
+      </div>
+      <nav style={{ display:'flex', gap:'22px', '@media(max-width:768px)':{display:'none'} }}>
+        {links.slice(0,5).map(([id,label]) => (
+          <button key={id} onClick={() => navClick(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'Cinzel',serif", fontSize:'8.5px', fontWeight:500, letterSpacing:'0.14em', textTransform:'uppercase', color: activeSection===id ? t.accent : t.textMuted, borderBottom: activeSection===id ? `1px solid ${t.accent}` : '1px solid transparent', padding:'3px 0', transition:'color 200ms' }}>{label}</button>
+        ))}
+      </nav>
+      <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'9.5px', fontWeight:500, letterSpacing:'0.16em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'9px 20px', textDecoration:'none', whiteSpace:'nowrap' }}>Appeler</a>
+    </header>
+  );
+};
+
+// ═══════════════════════════════════════════════════
+// HERO
+// ═══════════════════════════════════════════════════
+const StarField = ({ t }) => {
+  const stars = React.useMemo(() => Array.from({length:28},(_,i) => ({
+    x: (i*37+13)%97, y: (i*53+7)%93,
+    r: i%4===0?1.4:i%3===0?1.0:0.6,
+    delay: (i*0.3)%3,
+  })),[]);
+  return (
+    <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity: t.starOpacity }} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      {stars.map((s,i) => <circle key={i} cx={s.x} cy={s.y} r={s.r} fill={t.accent} style={{ animation:`floatDot ${2.8+s.delay}s ease-in-out infinite`, animationDelay:`${s.delay}s` }} />)}
+    </svg>
+  );
+};
+
+const AppHero = ({ t }) => {
+  const [vis, setVis] = React.useState(false);
+  React.useEffect(() => { const tid = setTimeout(() => setVis(true), 80); return () => clearTimeout(tid); }, []);
+  const anim = delay => ({ animation: vis ? `fadeUp 800ms cubic-bezier(0.25,0.46,0.45,0.94) ${delay}ms both` : 'none' });
+  return (
+    <section id="accueil" style={{ minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', textAlign:'center', padding:'clamp(92px,11vh,130px) clamp(20px,5vw,60px) clamp(56px,7vh,88px)', background: t.bgPage, position:'relative', overflow:'hidden' }}>
+      <StarField t={t} />
+      <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse 80% 70% at 50% 40%, ${t.bgSurface}cc, ${t.bgPage})` }} />
+      <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'140px', background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
+      <div style={{ position:'absolute', top:'20%', left:'8%', width:'180px', height:'180px', border:`1px solid ${t.border}`, borderRadius:'50%', opacity:0.4, animation:'spinSlow 40s linear infinite', pointerEvents:'none' }} />
+      <div style={{ position:'absolute', bottom:'18%', right:'6%', width:'120px', height:'120px', border:`1px solid ${t.border}`, borderRadius:'50%', opacity:0.3, animation:'spinSlow 28s linear infinite reverse', pointerEvents:'none' }} />
+      <div style={{ position:'relative', zIndex:2, maxWidth:'720px' }}>
+        <div style={anim(0)}><Eyebrow t={t}>✦ &nbsp; Voyance & Médiumnité · Suisse &nbsp; ✦</Eyebrow></div>
+        <h1 style={{ ...anim(130), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(38px,5.8vw,72px)', fontWeight:300, lineHeight:1.08, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'10px' }}>
+          Tu cherches une réponse.
+        </h1>
+        <h1 style={{ ...anim(200), fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(38px,5.8vw,72px)', fontWeight:300, lineHeight:1.08, letterSpacing:'-0.02em', color: t.textPrimary, marginBottom:'22px' }}>
+          <em style={{ fontStyle:'italic', color: t.accent }}>Pas un discours.</em>
+        </h1>
+        <p style={{ ...anim(280), fontFamily:"'Jost',sans-serif", fontSize:'clamp(15px,1.8vw,18px)', lineHeight:1.75, color: t.textSecondary, maxWidth:'500px', margin:'0 auto 36px' }}>
+          Je te dis ce que je capte. Rien de plus. Tu appelles — on voit ensemble ce qui se présente.
+        </p>
+        <div style={{ ...anim(350), marginBottom:'30px' }}><Ornament t={t} /></div>
+        <div style={anim(430)}>
+          <a href="tel:0901212212" style={{ display:'block', fontFamily:"'Cinzel',serif", fontSize:'clamp(24px,4vw,48px)', fontWeight:600, letterSpacing:'0.06em', color: t.accent, textDecoration:'none', marginBottom:'4px', animation:'heroPulse 2.6s ease-in-out infinite' }}>0901 212 212</a>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'11px', letterSpacing:'0.14em', color: t.textMuted, marginBottom:'28px' }}>CHF 2.– / min. · Disponible 7j/7</div>
+        </div>
+        <div style={{ ...anim(520), display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap', marginBottom:'44px' }}>
+          <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'10.5px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:`1px solid ${t.accent}`, borderRadius:'3px', padding:'13px 34px', textDecoration:'none', animation:'btnPulse 2.6s ease-in-out infinite', display:'flex', alignItems:'center', gap:'8px' }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
+            Appeler maintenant
+          </a>
+          <button onClick={() => scrollTo('methodes')} style={{ fontFamily:"'Cinzel',serif", fontSize:'10.5px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, background:'transparent', border:`1px solid ${t.borderStrong}`, borderRadius:'3px', padding:'13px 34px', cursor:'pointer' }}>Voir les méthodes</button>
+        </div>
+        <div style={{ ...anim(660), display:'flex', justifyContent:'center', gap:'clamp(20px,4vw,52px)', flexWrap:'wrap' }}>
+          {[['15+','Années d\'expérience'],['7j/7','Disponibilité'],['100%','Confidentiel']].map(([v,l]) => (
+            <div key={v} style={{ textAlign:'center' }}>
+              <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(20px,2.6vw,30px)', fontWeight:400, color: t.accent, lineHeight:1 }}>{v}</div>
+              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.14em', textTransform:'uppercase', color: t.textMuted, marginTop:'4px' }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ position:'absolute', bottom:'32px', left:'50%', transform:'translateX(-50%)', opacity:0.4, cursor:'pointer' }} onClick={() => scrollTo('apropos')}>
+        <svg width="18" height:"18" viewBox="0 0 24 24" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ animation:'floatDot 2s ease-in-out infinite' }}>
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+    </section>
+  );
+};
+
+// ═══════════════════════════════════════════════════
+// QUI JE SUIS (À PROPOS)
+// ═══════════════════════════════════════════════════
+const AppAbout = ({ t }) => (
+  <section id="apropos" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgSurface, position:'relative', overflow:'hidden' }}>
+    <div style={{ position:'absolute', right:'-60px', top:'-60px', width:'360px', height:'360px', background:`radial-gradient(circle, ${t.accent}12, transparent 70%)`, pointerEvents:'none' }} />
+    <div style={{ maxWidth:'1020px', margin:'0 auto', display:'grid', gridTemplateColumns:'minmax(180px,300px) 1fr', gap:'clamp(32px,5vw,72px)', alignItems:'center' }}>
+      <div style={{ position:'relative' }}>
+        <div style={{ width:'100%', aspectRatio:'3/4', background: t.bgCard, border:`1px solid ${t.border}`, borderRadius:'4px', boxShadow: t.shadowCard, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden', position:'relative' }}>
+          <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse 70% 60% at 50% 30%, ${t.bgAlt}, ${t.bgCard})` }} />
+          <div style={{ position:'relative', textAlign:'center', padding:'20px' }}>
+            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" style={{ display:'block', margin:'0 auto 16px', opacity:0.25 }}>
+              <circle cx="28" cy="20" r="12" stroke={t.accent} strokeWidth="0.8"/>
+              <path d="M8 48c0-11 9-19 20-19s20 8 20 19" stroke={t.accent} strokeWidth="0.8" strokeLinecap="round"/>
+            </svg>
+            <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.18em', textTransform:'uppercase', color: t.textMuted }}>Photo à ajouter</div>
+          </div>
+        </div>
+        <div style={{ position:'absolute', top:'-8px', left:'-8px', width:'28px', height:'28px', borderTop:`1.5px solid ${t.borderStrong}`, borderLeft:`1.5px solid ${t.borderStrong}` }} />
+        <div style={{ position:'absolute', bottom:'-8px', right:'-8px', width:'28px', height:'28px', borderBottom:`1.5px solid ${t.borderStrong}`, borderRight:`1.5px solid ${t.borderStrong}` }} />
+        <div style={{ marginTop:'20px', background: t.bgCard, border:`1px solid ${t.border}`, borderRadius:'4px', padding:'14px 16px', boxShadow: t.shadowCard }}>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.18em', textTransform:'uppercase', color: t.accent, marginBottom:'8px' }}>Disponibilité</div>
+          <div style={{ fontFamily:"'Jost',sans-serif", fontSize:'13px', color: t.textSecondary, lineHeight:1.6 }}>Lun–Dim · 8h00 – 22h00<br />Suisse romande & internationale</div>
+          <div style={{ marginTop:'10px', paddingTop:'10px', borderTop:`1px solid ${t.border}` }}>
+            <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'13px', fontWeight:600, letterSpacing:'0.06em', color: t.accent, textDecoration:'none' }}>0901 212 212</a>
+            <div style={{ fontFamily:"'Cinzel',serif", fontSize:'9px', color: t.textMuted, marginTop:'2px', letterSpacing:'0.1em' }}>CHF 2.– / min.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <Eyebrow t={t}>Qui je suis</Eyebrow>
+        <Heading2 t={t} align="left">Un regard direct.<br /><em style={{ fontStyle:'italic', color: t.accent }}>Pas de mise en scène.</em></Heading2>
+        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.8, color: t.textSecondary, marginBottom:'16px' }}>
+          Médium de naissance, j'ai grandi avec ce don comme une seconde nature. Pendant des années, j'ai appris à l'affiner — à séparer ce que je perçois de ce que j'imagine. Aujourd'hui, je mets cette clarté au service de ceux qui cherchent de vraies réponses.
+        </p>
+        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.8, color: t.textSecondary, marginBottom:'24px' }}>
+          Je travaille par téléphone. Pas de rendez-vous. Pas d'attente. Tu appelles, je capte, je te dis ce qui se présente. Sans fioritures.
+        </p>
+        <blockquote style={{ borderLeft:`2px solid ${t.borderStrong}`, paddingLeft:'18px', marginBottom:'28px', fontFamily:"'Cormorant Garamond',serif", fontSize:'19px', fontStyle:'italic', fontWeight:300, lineHeight:1.6, color: t.textSecondary }}>
+          « Je ne te promets pas ce que tu veux entendre. Je te dis ce que je vois. »
+        </blockquote>
+        <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:'10px' }}>
+          {[
+            'Don héréditaire, pratiqué depuis l\'enfance',
+            'Plus de 15 ans de consultations',
+            'Approche directe, sans discours creux',
+            'Confidentialité totale, sans exception',
+            'Disponible 7j/7, sans rendez-vous',
+            'Consultation en français, validée par des milliers d\'appels',
+          ].map(q => (
+            <li key={q} style={{ display:'flex', alignItems:'flex-start', gap:'10px' }}>
+              <span style={{ color: t.accent, fontSize:'8px', flexShrink:0, marginTop:'5px' }}>◆</span>
+              <span style={{ fontFamily:"'Jost',sans-serif", fontSize:'13.5px', color: t.textSecondary, lineHeight:1.5 }}>{q}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+);
+
+// ═══════════════════════════════════════════════════
+// COMMENT ÇA MARCHE
+// ═══════════════════════════════════════════════════
+const AppHowItWorks = ({ t }) => {
+  const steps = [
+    { n:'01', title:'Tu appelles', desc:'Compose le 0901 212 212. Pas besoin de préparer quoi que ce soit. L\'appel est sécurisé, confidentiel, sans engagement.' },
+    { n:'02', title:'Je capte', desc:'Dès les premières minutes, je me concentre sur ton énergie. Je perçois ce qui se passe dans ta vie sans que tu aies besoin de tout expliquer.' },
+    { n:'03', title:'Je te dis', desc:'Je partage ce que je reçois — clairement, directement. Passé, présent, tendances futures. Tu poses tes questions, j\'y réponds honnêtement.' },
+    { n:'04', title:'Tu avances', desc:'La consultation se termine quand tu es prêt. Tu raccroches avec des réponses concrètes, pas des formules vagues.' },
+  ];
+  return (
+    <section id="comment" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgAlt }}>
+      <div style={{ textAlign:'center', marginBottom:'clamp(32px,5vw,56px)' }}>
+        <Eyebrow t={t}>Le processus</Eyebrow>
+        <Heading2 t={t}>Comment ça <em style={{ fontStyle:'italic', color: t.accent }}>marche</em></Heading2>
+        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary, maxWidth:'420px', margin:'0 auto' }}>Simple. Direct. Tu n'as besoin de rien préparer.</p>
+      </div>
+      <div style={{ maxWidth:'900px', margin:'0 auto', display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(190px,1fr))', gap:'clamp(12px,2vw,20px)' }}>
+        {steps.map((s,i) => (
+          <div key={i} style={{ position:'relative', background: t.bgCard, border:`1px solid ${t.border}`, borderTop:`2px solid ${t.accent}`, borderRadius:'4px', padding:'clamp(20px,2.5vw,32px)', boxShadow: t.shadowCard }}>
+            <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'52px', fontWeight:300, lineHeight:1, color: t.accent, opacity:0.18, position:'absolute', top:'12px', right:'16px', pointerEvents:'none' }}>{s.n}</div>
+            <div style={{ fontFamily:"'Cinzel',serif", fontSize:'9px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'10px' }}>{s.n}</div>
+            <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'22px', fontWeight:400, color: t.textPrimary, marginBottom:'10px', lineHeight:1.2 }}>{s.title}</h3>
+            <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'13px', lineHeight:1.7, color: t.textSecondary }}>{s.desc}</p>
+            {i < steps.length-1 && <div style={{ display:'none' }} />}
+          </div>
+        ))}
+      </div>
+      <div style={{ textAlign:'center', marginTop:'clamp(28px,4vw,44px)' }}>
+        <a href="tel:0901212212" style={{ display:'inline-flex', alignItems:'center', gap:'9px', fontFamily:"'Cinzel',serif", fontSize:'10.5px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'13px 34px', textDecoration:'none', animation:'btnPulse 2.5s ease-in-out infinite' }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
+          Essayer maintenant · 0901 212 212
+        </a>
+      </div>
+    </section>
+  );
+};
+
+// ═══════════════════════════════════════════════════
+// MÉTHODES
+// ═══════════════════════════════════════════════════
+const METHODES = [
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="10" stroke="currentColor" strokeWidth="0.8"/>
+        <circle cx="14" cy="14" r="3" fill="currentColor" opacity="0.6"/>
+        <line x1="14" y1="4" x2="14" y2="1" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="14" y1="24" x2="14" y2="27" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="4" y1="14" x2="1" y2="14" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="24" y1="14" x2="27" y2="14" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="6.5" y1="6.5" x2="4.5" y2="4.5" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="21.5" y1="21.5" x2="23.5" y2="23.5" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="21.5" y1="6.5" x2="23.5" y2="4.5" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="6.5" y1="21.5" x2="4.5" y2="23.5" stroke="currentColor" strokeWidth="0.8"/>
+      </svg>
+    ),
+    label:'Médiumnité pure', title:'La connexion directe',
+    desc:'Sans outil ni support, je perçois les énergies qui t\'entourent. Les êtres chers disparus, les émotions bloquées, les situations présentes. Ce que je reçois, je te le transmets tel quel.',
+    detail:'Idéal pour : deuil, questions de fond, situations floues.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="4" y="2" width="20" height="24" rx="1" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="8" y1="8" x2="20" y2="8" stroke="currentColor" strokeWidth="0.6"/>
+        <line x1="8" y1="12" x2="20" y2="12" stroke="currentColor" strokeWidth="0.6"/>
+        <line x1="8" y1="16" x2="16" y2="16" stroke="currentColor" strokeWidth="0.6"/>
+        <line x1="8" y1="20" x2="14" y2="20" stroke="currentColor" strokeWidth="0.6"/>
+      </svg>
+    ),
+    label:'Oracle', title:'Les cartes comme miroir',
+    desc:'L\'Oracle révèle les forces actives dans ta vie. Chaque carte tirée est un reflet de l\'énergie du moment — pas une prédiction figée, mais un éclairage sur ce qui se joue.',
+    detail:'Idéal pour : décisions, relations, orientation générale.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="6" r="3" stroke="currentColor" strokeWidth="0.8"/>
+        <line x1="14" y1="9" x2="14" y2="24" stroke="currentColor" strokeWidth="0.8"/>
+        <ellipse cx="14" cy="25" rx="4" ry="2" stroke="currentColor" strokeWidth="0.6"/>
+      </svg>
+    ),
+    label:'Pendule divinatoire', title:'Les réponses du corps',
+    desc:'Le pendule amplifie les perceptions subtiles pour répondre à des questions précises. Oui, non, probable, incertain. Un outil simple, d\'une fiabilité surprenante entre les bonnes mains.',
+    detail:'Idéal pour : questions fermées, vérifications, hésitations.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <text x="3" y="20" fontFamily="serif" fontSize="18" fill="currentColor" opacity="0.7">7</text>
+        <circle cx="20" cy="8" r="6" stroke="currentColor" strokeWidth="0.7"/>
+        <text x="16.5" y="11.5" fontFamily="serif" fontSize="9" fill="currentColor" opacity="0.9">∞</text>
+      </svg>
+    ),
+    label:'Numérologie', title:'La science des nombres',
+    desc:'Chaque date de naissance, chaque prénom porte une vibration. La numérologie décode ces fréquences pour révéler ton chemin de vie, tes cycles, tes forces cachées et les périodes clés.',
+    detail:'Idéal pour : comprendre son chemin, timing, prise de recul.',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M5 22 Q8 10 14 8 Q20 6 23 18" stroke="currentColor" strokeWidth="0.8" fill="none" strokeLinecap="round"/>
+        <line x1="5" y1="22" x2="23" y2="22" stroke="currentColor" strokeWidth="0.6"/>
+        <circle cx="14" cy="8" r="1.5" fill="currentColor" opacity="0.5"/>
+      </svg>
+    ),
+    label:'Écriture automatique', title:'Ce qui vient d\'ailleurs',
+    desc:'La plume se pose, la conscience se retire. Ce qui s\'écrit alors dépasse le mental. L\'écriture automatique canalise des messages profonds — parfois d\'une précision déconcertante.',
+    detail:'Idéal pour : messages de l\'au-delà, questions ouvertes, guidance profonde.',
+  },
+];
+
+const AppMethodes = ({ t }) => {
+  const [active, setActive] = React.useState(null);
+  return (
+    <section id="methodes" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgPage }}>
+      <div style={{ textAlign:'center', marginBottom:'clamp(32px,5vw,52px)' }}>
+        <Eyebrow t={t}>Les approches</Eyebrow>
+        <Heading2 t={t}>Cinq méthodes.<br /><em style={{ fontStyle:'italic', color: t.accent }}>Une seule intention.</em></Heading2>
+        <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary, maxWidth:'440px', margin:'0 auto' }}>Chaque méthode a sa logique. En 5 secondes, tu comprends comment elle fonctionne.</p>
+      </div>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:'14px', maxWidth:'1060px', margin:'0 auto' }}>
+        {METHODES.map((m,i) => (
+          <div key={i} onClick={() => setActive(active===i?null:i)} style={{ background: active===i ? t.bgCard : t.bgSurface, border:`1px solid ${active===i ? t.borderStrong : t.border}`, borderTop:`2px solid ${active===i ? t.accent : t.border}`, borderRadius:'4px', padding:'clamp(18px,2.5vw,28px)', boxShadow: active===i ? `${t.shadowCard},${t.shadowGold}` : t.shadowCard, transform: active===i ? 'translateY(-3px)' : 'none', transition:'all 280ms ease', cursor:'pointer' }}>
+            <div style={{ color: t.accent, marginBottom:'14px', display:'flex', alignItems:'center', gap:'10px' }}>
+              {m.icon}
+              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8.5px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent }}>{m.label}</div>
+            </div>
+            <h3 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'21px', fontWeight:400, color: t.textPrimary, marginBottom:'10px', lineHeight:1.2 }}>{m.title}</h3>
+            <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'13px', lineHeight:1.7, color: t.textSecondary }}>{m.desc}</p>
+            {active===i && (
+              <div style={{ marginTop:'14px', paddingTop:'12px', borderTop:`1px solid ${t.border}` }}>
+                <div style={{ display:'flex', alignItems:'center', gap:'7px' }}>
+                  <span style={{ color: t.accent, fontSize:'8px' }}>◆</span>
+                  <span style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', color: t.textMuted, fontStyle:'italic' }}>{m.detail}</span>
+                </div>
+              </div>
+            )}
+            <div style={{ marginTop:'12px', display:'flex', alignItems:'center', gap:'5px', opacity:0.5 }}>
+              <span style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.accent }}>{active===i ? 'Réduire' : 'En savoir plus'}</span>
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ transform: active===i ? 'rotate(180deg)' : 'none', transition:'transform 200ms' }}><polyline points="2 4 6 8 10 4"/></svg>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+// ═══════════════════════════════════════════════════
+// TÉMOIGNAGES
+// ═══════════════════════════════════════════════════
+const TESTIMONIALS = [
+  { quote:"J'ai appelé sans vraiment y croire. En trois minutes, il m'a décrit une situation que personne ne connaissait. Pas de généralités — des détails précis. Je suis encore soufflée.", name:"Claire M.", city:"Lausanne", stars:5 },
+  { quote:"Direct, sans fioriture. Il m'a dit des choses que je n'avais pas envie d'entendre — mais qui s'avéraient vraies. C'est ça, une vraie consultation de voyance.", name:"Julien R.", city:"Genève", stars:5 },
+  { quote:"Ma mère venait de partir. Il a capté sa présence sans que je dise quoi que ce soit. La sérénité que j'ai ressentie après cet appel m'a accompagnée des semaines.", name:"Sophie L.", city:"Fribourg", stars:5 },
+  { quote:"Troisième consultation en deux ans. Toujours la même honnêteté, le même calme. Ses indications sur ma vie professionnelle se sont révélées exactes.", name:"Marc D.", city:"Neuchâtel", stars:5 },
+  { quote:"J'avais une question précise sur ma relation. Il a cerné la situation en quelques secondes. Pas de blabla, pas de mystère inutile. Une réponse claire.", name:"Isabelle T.", city:"Berne", stars:5 },
+];
+
+const AppTestimonials = ({ t }) => {
+  const [idx, setIdx] = React.useState(0);
+  const [fading, setFading] = React.useState(false);
+  const go = i => { if (fading) return; setFading(true); setTimeout(() => { setIdx(i); setFading(false); }, 220); };
+  React.useEffect(() => { const tid = setInterval(() => go((idx+1)%TESTIMONIALS.length), 5800); return () => clearInterval(tid); }, [idx]);
+  const tm = TESTIMONIALS[idx];
+  return (
+    <section id="temoignages" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgSurface, textAlign:'center' }}>
+      <Eyebrow t={t}>Ce qu'ils disent</Eyebrow>
+      <Heading2 t={t}>Des témoignages <em style={{ fontStyle:'italic', color: t.accent }}>vrais</em></Heading2>
+      <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'14px', lineHeight:1.7, color: t.textMuted, maxWidth:'380px', margin:'0 auto 40px' }}>Pas de mise en scène. Des mots d'appelants réels.</p>
+      <div style={{ maxWidth:'660px', margin:'0 auto' }}>
+        <div style={{ background: t.bgCard, border:`1px solid ${t.border}`, borderRadius:'4px', padding:'clamp(24px,4vw,48px)', boxShadow: t.shadowCard, opacity: fading?0:1, transform: fading?'translateY(6px)':'none', transition:'opacity 220ms,transform 220ms', position:'relative', minHeight:'220px' }}>
+          <div style={{ position:'absolute', top:'14px', left:'22px', fontFamily:"'Cormorant Garamond',serif", fontSize:'72px', fontWeight:300, color: t.accent, opacity:0.10, lineHeight:1, pointerEvents:'none' }}>"</div>
+          <div style={{ color: t.accent, fontSize:'12px', letterSpacing:'4px', marginBottom:'20px' }}>{'★'.repeat(tm.stars)}</div>
+          <p style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(15px,2vw,20px)', fontStyle:'italic', fontWeight:300, lineHeight:1.65, color: t.textSecondary, marginBottom:'24px' }}>« {tm.quote} »</p>
+          <div style={{ height:'1px', background: t.border, marginBottom:'18px' }} />
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'12px' }}>
+            <div style={{ width:'38px', height:'38px', borderRadius:'50%', background: t.bgSurface, border:`1px solid ${t.border}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:"'Cormorant Garamond',serif", fontSize:'16px', fontStyle:'italic', color: t.accent }}>{tm.name[0]}</div>
+            <div style={{ textAlign:'left' }}>
+              <div style={{ fontFamily:"'Cinzel',serif", fontSize:'9.5px', letterSpacing:'0.14em', textTransform:'uppercase', color: t.textPrimary }}>{tm.name}</div>
+              <div style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', color: t.textMuted, marginTop:'2px' }}>{tm.city}, Suisse</div>
+            </div>
+          </div>
+        </div>
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'10px', marginTop:'22px' }}>
+          <button onClick={() => go((idx-1+TESTIMONIALS.length)%TESTIMONIALS.length)} style={{ background:'none', border:`1px solid ${t.border}`, borderRadius:'2px', width:'34px', height:'34px', color: t.accent, cursor:'pointer', fontSize:'15px', display:'flex', alignItems:'center', justifyContent:'center' }}>‹</button>
+          {TESTIMONIALS.map((_,i) => <button key={i} onClick={() => go(i)} style={{ width:i===idx?'22px':'6px', height:'6px', background:i===idx?t.accent:t.border, border:'none', borderRadius:'3px', cursor:'pointer', padding:0, transition:'all 280ms' }} />)}
+          <button onClick={() => go((idx+1)%TESTIMONIALS.length)} style={{ background:'none', border:`1px solid ${t.border}`, borderRadius:'2px', width:'34px', height:'34px', color: t.accent, cursor:'pointer', fontSize:'15px', display:'flex', alignItems:'center', justifyContent:'center' }}>›</button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ═══════════════════════════════════════════════════
+// FAQ
+// ═══════════════════════════════════════════════════
+const FAQ_ITEMS = [
+  { q:'Dois-je préparer mes questions avant d\'appeler ?', a:'Non. Tu n\'as rien à préparer. Beaucoup appellent sans savoir exactement ce qu\'ils cherchent — et la consultation révèle ce qui est important. Si tu as des questions précises, note-les, mais ce n\'est pas obligatoire.' },
+  { q:'Comment est facturé l\'appel ?', a:'L\'appel est facturé CHF 2.– par minute, directement sur ta facture téléphonique. Tu contrôles la durée — tu raccroches quand tu veux. Aucun abonnement, aucun engagement.' },
+  { q:'Est-ce vraiment confidentiel ?', a:'Oui, totalement. Aucun enregistrement, aucune transmission de données. Ce que tu partages reste entre nous. La discrétion fait partie du respect que je dois à chaque personne qui appelle.' },
+  { q:'Puis-je appeler depuis un mobile ?', a:'Oui, depuis n\'importe quel téléphone suisse, fixe ou mobile. Les numéros 0901 sont accessibles depuis tout opérateur suisse.' },
+  { q:'Est-ce que la voyance peut vraiment m\'aider ?', a:'Une consultation bien menée t\'offre un autre regard sur ta situation. Pas des certitudes absolues — personne ne peut les promettre honnêtement — mais un éclairage souvent utile pour avancer. Je te dis ce que je vois, tu en fais ce que tu juges bon.' },
+  { q:'Combien de temps dure une consultation ?', a:'Il n\'y a pas de durée imposée. La plupart des consultations durent entre 10 et 25 minutes. Tu raccroches quand tu te sens satisfait. Pas de pression.' },
+  { q:'Puis-je poser des questions sur une autre personne ?', a:'Oui, sur des personnes proches. Cependant, la consultation reste centrée sur toi et ta relation à cette personne — non sur une surveillance de quelqu\'un à son insu.' },
+];
+
+const FaqItem = ({ t, item }) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div style={{ border:`1px solid ${t.border}`, borderRadius:'4px', background: t.bgCard, overflow:'hidden', transition:'box-shadow 200ms', boxShadow: open ? t.shadowGold : 'none' }}>
+      <button onClick={() => setOpen(!open)} style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', gap:'12px', padding:'clamp(14px,2vw,20px)', background:'none', border:'none', cursor:'pointer', textAlign:'left' }}>
+        <span style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(14px,1.8vw,18px)', fontWeight:400, color: t.textPrimary, lineHeight:1.35 }}>{item.q}</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={t.accent} strokeWidth="1.5" strokeLinecap="round" style={{ flexShrink:0, transform: open ? 'rotate(180deg)' : 'none', transition:'transform 220ms' }}><polyline points="2 4 7 10 12 4"/></svg>
+      </button>
+      {open && (
+        <div style={{ padding:'0 clamp(14px,2vw,20px) clamp(14px,2vw,20px)', borderTop:`1px solid ${t.border}` }}>
+          <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'14px', lineHeight:1.75, color: t.textSecondary, paddingTop:'14px' }}>{item.a}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const AppFAQ = ({ t }) => (
+  <section id="faq" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgAlt }}>
+    <div style={{ maxWidth:'720px', margin:'0 auto' }}>
+      <div style={{ textAlign:'center', marginBottom:'clamp(28px,4vw,48px)' }}>
+        <Eyebrow t={t}>Questions fréquentes</Eyebrow>
+        <Heading2 t={t}>Ce que tout le monde <em style={{ fontStyle:'italic', color: t.accent }}>veut savoir</em></Heading2>
+      </div>
+      <div style={{ display:'flex', flexDirection:'column', gap:'10px' }}>
+        {FAQ_ITEMS.map((item,i) => <FaqItem key={i} t={t} item={item} />)}
+      </div>
+    </div>
+  </section>
+);
+
+// ═══════════════════════════════════════════════════
+// CONTACT / CTA CENTRAL
+// ═══════════════════════════════════════════════════
+const AppContact = ({ t }) => (
+  <section id="contact" style={{ padding:'clamp(56px,8vw,108px) clamp(20px,5vw,68px)', background: t.bgSurface, borderTop:`1px solid ${t.border}`, textAlign:'center', position:'relative', overflow:'hidden' }}>
+    <StarField t={t} />
+    <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse 55% 70% at 50% 50%, ${t.bgSurface}f0, transparent)` }} />
+    <div style={{ position:'relative', zIndex:1, maxWidth:'600px', margin:'0 auto' }}>
+      <Eyebrow t={t}>✦ &nbsp; Consultation immédiate &nbsp; ✦</Eyebrow>
+      <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'clamp(26px,4vw,52px)', fontWeight:300, lineHeight:1.1, color: t.textPrimary, marginBottom:'14px' }}>
+        Tu appelles.<br /><em style={{ fontStyle:'italic', color: t.accent }}>On voit ensemble.</em>
+      </h2>
+      <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary, maxWidth:'400px', margin:'0 auto 32px' }}>
+        Pas de rendez-vous. Pas d'attente. Disponible maintenant.
+      </p>
+      <div style={{ marginBottom:'8px' }}><Ornament t={t} /></div>
+      <a href="tel:0901212212" style={{ display:'block', fontFamily:"'Cinzel',serif", fontSize:'clamp(28px,5vw,56px)', fontWeight:600, letterSpacing:'0.07em', color: t.accent, textDecoration:'none', margin:'28px 0 4px', animation:'heroPulse 2.5s ease-in-out infinite' }}>0901 212 212</a>
+      <div style={{ fontFamily:"'Cinzel',serif", fontSize:'12px', letterSpacing:'0.14em', color: t.textMuted, marginBottom:'30px' }}>CHF 2.– / min. · Suisse · 7j/7 · 8h–22h</div>
+      <a href="tel:0901212212" style={{ display:'inline-flex', alignItems:'center', gap:'10px', fontFamily:"'Cinzel',serif", fontSize:'11px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'15px 40px', textDecoration:'none', animation:'btnPulse 2.5s ease-in-out infinite' }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
+        Appeler maintenant
+      </a>
+      <div style={{ display:'flex', justifyContent:'center', gap:'clamp(14px,3vw,40px)', flexWrap:'wrap', marginTop:'24px' }}>
+        {['Paiement sur facture','Confidentiel','Sans engagement'].map(l => (
+          <div key={l} style={{ display:'flex', alignItems:'center', gap:'7px' }}>
+            <span style={{ color: t.accent, fontSize:'8px' }}>◆</span>
+            <span style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.textMuted }}>{l}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+// ═══════════════════════════════════════════════════
+// FOOTER
+// ═══════════════════════════════════════════════════
+const AppFooter = ({ t }) => (
+  <footer style={{ background: t.bgAlt, borderTop:`1px solid ${t.border}`, padding:'clamp(32px,5vw,56px) clamp(20px,5vw,68px) clamp(18px,3vw,28px)' }}>
+    <div style={{ maxWidth:'1020px', margin:'0 auto' }}>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))', gap:'clamp(22px,3vw,44px)', paddingBottom:'24px', borderBottom:`1px solid ${t.border}`, marginBottom:'18px' }}>
+        <div>
+          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:'19px', fontWeight:300, fontStyle:'italic', color: t.textPrimary, marginBottom:'4px' }}>medium<span style={{ color: t.accent }}>voyant</span><span style={{ fontSize:'12px', color: t.textMuted }}>.ch</span></div>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'7px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginBottom:'10px' }}>Voyance · Suisse</div>
+          <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', lineHeight:1.65, color: t.textMuted }}>Consultation de voyance par téléphone. Guidance sincère, disponible dans toute la Suisse. 7j/7.</p>
+        </div>
+        <div>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Navigation</div>
+          <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:'7px' }}>
+            {[['accueil','Accueil'],['apropos','Qui je suis'],['methodes','Les méthodes'],['comment','Comment ça marche'],['temoignages','Témoignages'],['faq','FAQ'],['contact','Contact']].map(([id,l]) => (
+              <li key={id}><button onClick={() => scrollTo(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'Jost',sans-serif", fontSize:'12px', color: t.textMuted, padding:0 }}>{l}</button></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Contact</div>
+          <a href="tel:0901212212" style={{ fontFamily:"'Cinzel',serif", fontSize:'15px', fontWeight:600, letterSpacing:'0.06em', color: t.accent, textDecoration:'none', display:'block', marginBottom:'2px' }}>0901 212 212</a>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'9.5px', letterSpacing:'0.08em', color: t.textMuted, marginBottom:'10px' }}>CHF 2.– / min.</div>
+          <div style={{ fontFamily:"'Jost',sans-serif", fontSize:'12px', color: t.textMuted, lineHeight:1.6 }}>Disponible 7j/7 · 8h00–22h00<br />Toute la Suisse</div>
+        </div>
+        <div>
+          <div style={{ fontFamily:"'Cinzel',serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Mention légale</div>
+          <p style={{ fontFamily:"'Jost',sans-serif", fontSize:'11px', lineHeight:1.65, color: t.textMuted }}>La voyance est un service de guidance personnelle. Elle ne constitue pas une science exacte. Aucun résultat n'est garanti. Pour toute décision importante, consultez également des professionnels qualifiés.</p>
+        </div>
+      </div>
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'10px' }}>
+        <div style={{ fontFamily:"'Jost',sans-serif", fontSize:'11px', color: t.textMuted }}>© {new Date().getFullYear()} mediumvoyant.ch · Tous droits réservés</div>
+        <div style={{ display:'flex', gap:'18px' }}>
+          {['Confidentialité','CGU','Mentions légales'].map(l => <span key={l} style={{ fontFamily:"'Cinzel',serif", fontSize:'7.5px', letterSpacing:'0.12em', textTransform:'uppercase', color: t.textMuted, cursor:'pointer' }}>{l}</span>)}
+        </div>
+      </div>
+    </div>
+  </footer>
+);
+
+// ═══════════════════════════════════════════════════
+// APP
+// ═══════════════════════════════════════════════════
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"theme":"sombre"}/*EDITMODE-END*/;
+
+const App = () => {
+  const { tweaks, setTweak } = useTweaks(TWEAK_DEFAULTS);
+  const t = THEMES[tweaks.theme] || THEMES.sombre;
+
+  const [activeSection, setActiveSection] = React.useState('accueil');
+  React.useEffect(() => {
+    const ids = ['accueil','apropos','methodes','comment','temoignages','faq','contact'];
+    const obs = ids.map(id => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setActiveSection(id); }, { rootMargin:'-40% 0px -55% 0px' });
+      o.observe(el); return o;
+    });
+    return () => obs.forEach(o => o?.disconnect());
+  }, []);
+
+  React.useEffect(() => {
+    document.body.style.background = t.bgPage;
+    document.body.style.color = t.textPrimary;
+  }, [t]);
+
+  return (
+    <React.Fragment>
+      <AppHeader t={t} activeSection={activeSection} />
+      <main>
+        <AppHero t={t} />
+        <AppAbout t={t} />
+        <AppHowItWorks t={t} />
+        <AppMethodes t={t} />
+        <AppTestimonials t={t} />
+        <AppFAQ t={t} />
+        <AppContact t={t} />
+      </main>
+      <AppFooter t={t} />
+      <FloatingCall t={t} />
+      <TweaksPanel title="Apparence">
+        <TweakSection title="Ambiance">
+          <TweakRadio label="Thème" value={tweaks.theme} onChange={v => setTweak('theme', v)}
+            options={[{value:'clair',label:'Clair'},{value:'doux',label:'Doux'},{value:'sombre',label:'Sombre'}]} />
+        </TweakSection>
+      </TweaksPanel>
+    </React.Fragment>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
