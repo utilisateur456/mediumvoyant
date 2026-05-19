@@ -25,11 +25,21 @@
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
   button { font-family: inherit; }
+
   @keyframes heroPulse { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 20px currentColor} }
   @keyframes btnPulse  { 0%,100%{box-shadow:0 0 0 0 oklch(75% 0.12 85/0.5)} 50%{box-shadow:0 0 0 10px oklch(75% 0.12 85/0)} }
   @keyframes fadeUp    { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
   @keyframes floatDot  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
   @keyframes spinSlow  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  /* ── Video fade-in ── */
+  .hero-video {
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .hero-video.playing {
+    opacity: 1;
+  }
 
   /* ── RESPONSIVE MOBILE ── */
   @media (max-width: 860px) {
@@ -51,6 +61,7 @@
 </style>
 </head>
 <body>
+
 <div id="root"></div>
 <script type="text/babel">
 
@@ -297,11 +308,25 @@ const StarField = ({ t }) => {
 };
 
 const AppHero = ({ t }) => {
+  const videoRef = React.useRef(null);
+  const [videoPlaying, setVideoPlaying] = React.useState(false);
   const [vis, setVis] = React.useState(false);
+
+  // Texte visible immédiatement
   React.useEffect(() => { const tid = setTimeout(() => setVis(true), 80); return () => clearTimeout(tid); }, []);
+
+  // Vidéo : fade-in indépendant quand elle joue
+  React.useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    const show = () => setVideoPlaying(true);
+    if (!vid.paused && vid.readyState >= 3) { show(); return; }
+    vid.addEventListener('playing', show);
+    return () => vid.removeEventListener('playing', show);
+  }, []);
+
   const anim = delay => ({ animation: vis ? `fadeUp 800ms cubic-bezier(0.25,0.46,0.45,0.94) ${delay}ms both` : 'none' });
 
-  // Texte blanc fixe sur la vidéo pour lisibilité maximale
   const WHITE  = 'oklch(98% 0.005 85)';
   const GOLD   = t.accent;
   const MUTED  = 'oklch(80% 0.01 80)';
@@ -310,17 +335,28 @@ const AppHero = ({ t }) => {
   return (
     <section id="accueil" style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', background:'#0a0806', position:'relative', overflow:'hidden' }}>
 
-      {/* ── Vidéo fond plein écran ── */}
+      {/* ── Fond statique dégradé (visible immédiatement, avant la vidéo) ── */}
+      <div style={{
+        position:'absolute', inset:0, zIndex:0,
+        background:'radial-gradient(ellipse 120% 80% at 50% 40%, #1a1410 0%, #0a0806 100%)',
+      }} />
+
+      {/* ── Vidéo fond plein écran — fade-in quand elle joue ── */}
       <video
+        ref={videoRef}
+        className={`hero-video${videoPlaying ? ' playing' : ''}`}
         autoPlay muted loop playsInline
+        preload="auto"
+        poster="images/hero-poster.jpg"
         style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', zIndex:0, pointerEvents:'none' }}
       >
+        {/* Priorité à la version compressée, fallback sur l'originale */}
+        <source src="videos/intro-web.mp4" type="video/mp4" />
         <source src="videos/intro.mp4" type="video/mp4" />
       </video>
 
       {/* ── Voile sombre dégradé — lisibilité du texte ── */}
       <div style={{ position:'absolute', inset:0, zIndex:1, background:'linear-gradient(160deg, rgba(8,5,2,0.62) 0%, rgba(8,5,2,0.45) 50%, rgba(8,5,2,0.70) 100%)' }} />
-      {/* fondu bas vers le fond de page */}
       <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'160px', zIndex:1, background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
 
       {/* ── Contenu centré ── */}
@@ -340,14 +376,14 @@ const AppHero = ({ t }) => {
 
         <div style={{ ...anim(320), marginBottom:'30px' }}><Ornament t={{ ...t, accent: GOLD, borderStrong: BORDER }} /></div>
 
-        <div style={{ ...anim(400), marginBottom:'6px', animation:'heroPulse 2.6s ease-in-out infinite' }}>
+        <div style={{ ...anim(400), marginBottom:'6px', animation: vis ? 'heroPulse 2.6s ease-in-out infinite' : 'none' }}>
           <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(22px,3vw,42px)', fontWeight:600, letterSpacing:'0.05em', color: GOLD, textDecoration:'none', lineHeight:1 }}>0901 212 212</a>
           <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(22px,3vw,42px)', fontWeight:300, letterSpacing:'0.04em', color: GOLD, opacity:0.6, lineHeight:1, marginLeft:'clamp(8px,1vw,14px)' }}>CHF 2.– / min.</span>
         </div>
         <div style={{ ...anim(420), fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', letterSpacing:'0.18em', color: MUTED, marginBottom:'30px' }}>Disponible 7j/7 · 8h–22h</div>
 
         <div style={{ ...anim(500), display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap', marginBottom:'44px' }}>
-          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: GOLD, border:`1px solid ${GOLD}`, borderRadius:'3px', padding:'14px 34px', textDecoration:'none', animation:'btnPulse 2.6s ease-in-out infinite', display:'flex', alignItems:'center', gap:'8px' }}>
+          <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: GOLD, border:`1px solid ${GOLD}`, borderRadius:'3px', padding:'14px 34px', textDecoration:'none', animation: vis ? 'btnPulse 2.6s ease-in-out infinite' : 'none', display:'flex', alignItems:'center', gap:'8px' }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
             Appeler maintenant
           </a>
@@ -457,7 +493,6 @@ const AppHowItWorks = ({ t }) => {
             <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'9px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'10px' }}>{s.n}</div>
             <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:'22px', fontWeight:400, color: t.textPrimary, marginBottom:'10px', lineHeight:1.2 }}>{s.title}</h3>
             <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', lineHeight:1.7, color: t.textSecondary }}>{s.desc}</p>
-            {i < steps.length-1 && <div style={{ display:'none' }} />}
           </div>
         ))}
       </div>
@@ -763,10 +798,7 @@ function BookingForm({ t }) {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
-      {/* Champ caché date de réception */}
       <input type="hidden" name="recu_le" value={new Date().toLocaleString('fr-CH')} />
-
-      {/* Prénom + Email */}
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' }}>
         <div>
           <label style={labelStyle(t)}>Prénom *</label>
@@ -777,14 +809,10 @@ function BookingForm({ t }) {
           <input name="email" type="email" required placeholder="marie@exemple.com" {...focusProps('email')} />
         </div>
       </div>
-
-      {/* Téléphone */}
       <div>
         <label style={labelStyle(t)}>Téléphone *</label>
         <input name="telephone" type="tel" required placeholder="+41 79 000 00 00" {...focusProps('telephone')} />
       </div>
-
-      {/* Date + Heure */}
       <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'12px' }}>
         <div>
           <label style={labelStyle(t)}>Date souhaitée *</label>
@@ -795,8 +823,6 @@ function BookingForm({ t }) {
           <input name="heure" type="text" required placeholder="ex: 14:30" {...focusProps('heure')} />
         </div>
       </div>
-
-      {/* Type de consultation */}
       <div>
         <label style={labelStyle(t)}>Type de consultation *</label>
         <select name="type" defaultValue="" required onFocus={() => setFocused('type')} onBlur={() => setFocused('')}
@@ -805,13 +831,11 @@ function BookingForm({ t }) {
           {CONSULTATION_TYPES.map(c => <option key={c} value={c} style={{ background: t.bgCard, color: t.textPrimary }}>{c}</option>)}
         </select>
       </div>
-
       {status === 'error' && (
         <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color:'oklch(55% 0.18 25)', textAlign:'center' }}>
           Une erreur s'est produite. Réessaie ou appelle directement le 0901 212 212.
         </p>
       )}
-
       <button type="submit" disabled={status === 'sending'} style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'9px', fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, border:'none', borderRadius:'3px', padding:'14px 28px', cursor: status === 'sending' ? 'wait' : 'pointer', opacity: status === 'sending' ? 0.7 : 1, transition:'opacity 200ms' }}>
         {status === 'sending' ? 'Envoi en cours…' : (
           <>
@@ -829,8 +853,6 @@ const AppContact = ({ t }) => (
     <StarField t={t} />
     <div style={{ position:'absolute', inset:0, background:`radial-gradient(ellipse 55% 70% at 50% 50%, ${t.bgSurface}f0, transparent)` }} />
     <div className="contact-grid" style={{ position:'relative', zIndex:1, maxWidth:'960px', margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(32px,5vw,72px)', alignItems:'start' }}>
-
-      {/* Colonne gauche — CTA téléphone */}
       <div style={{ textAlign:'left' }}>
         <Eyebrow t={t}>✦ &nbsp; Consultation immédiate &nbsp; ✦</Eyebrow>
         <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(26px,4vw,52px)', fontWeight:300, lineHeight:1.1, color: t.textPrimary, marginBottom:'14px' }}>
@@ -858,8 +880,6 @@ const AppContact = ({ t }) => (
           ))}
         </div>
       </div>
-
-      {/* Colonne droite — Formulaire de réservation */}
       <div style={{ background: t.bgCard, border:`1px solid ${t.border}`, borderRadius:'4px', padding:'clamp(22px,3vw,36px)', boxShadow: t.shadowCard }}>
         <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8.5px', letterSpacing:'0.22em', textTransform:'uppercase', color: t.accent, marginBottom:'6px' }}>Ou réserver par email</div>
         <div style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(18px,2.2vw,24px)', fontWeight:300, color: t.textPrimary, marginBottom:'6px' }}>
@@ -870,7 +890,6 @@ const AppContact = ({ t }) => (
         </p>
         <BookingForm t={t} />
       </div>
-
     </div>
   </section>
 );
@@ -926,6 +945,7 @@ const App = () => {
   const t = THEMES[tweaks.theme] || THEMES.sombre;
 
   const [activeSection, setActiveSection] = React.useState('accueil');
+
   React.useEffect(() => {
     const ids = ['accueil','apropos','methodes','comment','temoignages','faq','contact'];
     const obs = ids.map(id => {
