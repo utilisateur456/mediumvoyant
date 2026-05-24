@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MediumVoyant.ch — Voyance & Médiumnité en Suisse | 0901 212 212 (CHF 2.–/min.)</title>
 <meta name="description" content="Consultation de voyance par téléphone en Suisse. Médium voyant disponible 7j/7. Réponses claires, guidance sincère. Appelez maintenant le 0901 212 212 — CHF 2.- / min.">
-<meta name="keywords" content="voyance suisse, médium, consultation voyance téléphone, médium voyant suisse, guidance, voyance en ligne, médiumnité, numérologie suisse, réponse rapide">
+<meta name="keywords" content="voyance suisse, médium, consultation voyance téléphone, médium voyant suisse, guidance, voyance en ligne, médiumnité, numérologie suisse, réponse rapide, boutique ésotérique, tarots, cristaux, bougies, Maison Sidérale">
 <meta property="og:title" content="MediumVoyant.ch — Voyance & Médiumnité en Suisse">
 <meta property="og:description" content="Tu cherches une réponse claire. Pas un discours. Appelez le 0901 212 212 (CHF 2.–/min.).">
 <meta property="og:type" content="website">
@@ -25,13 +25,13 @@
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
   body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
   button { font-family: inherit; }
-
+ 
   @keyframes heroPulse { 0%,100%{text-shadow:none} 50%{text-shadow:0 0 20px currentColor} }
   @keyframes btnPulse  { 0%,100%{box-shadow:0 0 0 0 oklch(75% 0.12 85/0.5)} 50%{box-shadow:0 0 0 10px oklch(75% 0.12 85/0)} }
   @keyframes fadeUp    { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:none} }
   @keyframes floatDot  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
   @keyframes spinSlow  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-
+ 
   /* ── Video fade-in ── */
   .hero-video {
     opacity: 0;
@@ -40,7 +40,15 @@
   .hero-video.playing {
     opacity: 1;
   }
-
+ 
+  /* ── Boutique — cartes produit (hover géré en CSS, couleurs en inline via thème) ── */
+  .ms-card { transition: transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease; }
+  .ms-card:hover { transform: translateY(-5px); }
+  .ms-card .ms-img { transition: transform 600ms ease; }
+  .ms-card:hover .ms-img { transform: scale(1.06); }
+  .ms-shop-link { transition: transform 200ms ease, opacity 200ms ease; }
+  .ms-shop-link:hover { transform: translateY(-2px); }
+ 
   /* ── RESPONSIVE MOBILE ── */
   @media (max-width: 860px) {
     .site-nav     { display: none !important; }
@@ -60,10 +68,10 @@
 </style>
 </head>
 <body>
-
+ 
 <div id="root"></div>
 <script type="text/babel">
-
+ 
 // ═══════════════════════════════════════════════════
 // TWEAKS SHELL
 // ═══════════════════════════════════════════════════
@@ -95,7 +103,7 @@ const TWEAKS_CSS = `
     color:inherit;font:inherit;font-weight:500;min-height:24px;border-radius:6px;
     cursor:pointer;padding:3px 4px;line-height:1.2}
 `;
-
+ 
 function useTweaks(defaults) {
   const [values, setValues] = React.useState(defaults);
   const setTweak = React.useCallback((keyOrObj, val) => {
@@ -105,7 +113,7 @@ function useTweaks(defaults) {
   }, []);
   return { tweaks: values, setTweak };
 }
-
+ 
 function TweaksPanel({ title = 'Tweaks', children }) {
   const [open, setOpen] = React.useState(false);
   React.useEffect(() => {
@@ -129,11 +137,11 @@ function TweaksPanel({ title = 'Tweaks', children }) {
     </>
   );
 }
-
+ 
 function TweakSection({ title, children }) {
   return <><div className="twk-sect">{title}</div>{children}</>;
 }
-
+ 
 function TweakRadio({ label, value, options, onChange }) {
   const opts = options.map(o => typeof o === 'object' ? o : { value: o, label: o });
   const idx = Math.max(0, opts.findIndex(o => o.value === value));
@@ -148,7 +156,7 @@ function TweakRadio({ label, value, options, onChange }) {
     </div>
   );
 }
-
+ 
 // ═══════════════════════════════════════════════════
 // THEMES
 // ═══════════════════════════════════════════════════
@@ -205,7 +213,7 @@ const THEMES = {
     starOpacity:   0.55,
   },
 };
-
+ 
 // ═══════════════════════════════════════════════════
 // SHARED HELPERS
 // ═══════════════════════════════════════════════════
@@ -213,7 +221,7 @@ const scrollToSection = id => {
   const el = document.getElementById(id);
   if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
 };
-
+ 
 const Ornament = ({ t }) => (
   <div style={{ display:'flex', alignItems:'center', gap:'14px', maxWidth:'220px', margin:'0 auto' }}>
     <div style={{ flex:1, height:'1px', background: t.borderStrong }} />
@@ -221,15 +229,15 @@ const Ornament = ({ t }) => (
     <div style={{ flex:1, height:'1px', background: t.borderStrong }} />
   </div>
 );
-
+ 
 const Eyebrow = ({ t, children }) => (
   <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.26em', textTransform:'uppercase', color: t.accent, marginBottom:'14px' }}>{children}</div>
 );
-
+ 
 const Heading2 = ({ t, children, align='center' }) => (
   <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(26px,3.5vw,44px)', fontWeight:300, lineHeight:1.15, color: t.textPrimary, marginBottom:'14px', textAlign: align }}>{children}</h2>
 );
-
+ 
 // ═══════════════════════════════════════════════════
 // FLOATING CALL BUTTON (mobile sticky)
 // ═══════════════════════════════════════════════════
@@ -247,7 +255,31 @@ const FloatingCall = ({ t }) => {
     </a>
   );
 };
-
+ 
+// ═══════════════════════════════════════════════════
+// BACK TO TOP — flèche discrète de remontée
+// ═══════════════════════════════════════════════════
+const BackToTop = ({ t }) => {
+  const [show, setShow] = React.useState(false);
+  const [hover, setHover] = React.useState(false);
+  React.useEffect(() => {
+    const fn = () => setShow(window.scrollY > 500);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      aria-label="Remonter en haut de la page"
+      title="Remonter en haut"
+      style={{ position:'fixed', bottom:'22px', left:'22px', zIndex:300, width:'44px', height:'44px', borderRadius:'50%', background: hover ? t.accent : t.bgCard, border:`1px solid ${t.borderStrong}`, color: hover ? t.accentText : t.accent, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow: t.shadowCard, transition:'transform 300ms ease, opacity 300ms ease, background 220ms ease, color 220ms ease', transform: show ? 'translateY(0)' : 'translateY(16px)', opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', padding:0 }}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+  );
+};
+ 
 // ═══════════════════════════════════════════════════
 // HEADER
 // ═══════════════════════════════════════════════════
@@ -259,7 +291,7 @@ const AppHeader = ({ t, activeSection }) => {
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
   }, []);
-  const links = [['accueil','Accueil'],['apropos','Qui je suis'],['methodes','Méthodes'],['comment','Comment ça marche'],['temoignages','Témoignages'],['faq','FAQ'],['contact','Contact']];
+  const links = [['accueil','Accueil'],['apropos','Qui je suis'],['methodes','Méthodes'],['boutique','Boutique'],['comment','Comment ça marche'],['temoignages','Témoignages'],['faq','FAQ'],['contact','Contact']];
   const navClick = id => { scrollToSection(id); setMobileOpen(false); };
   return (
     <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:200, height:'68px', display:'flex', alignItems:'center', justifyContent:'space-between', padding:'0 clamp(16px,4vw,56px)', background: t.bgNav, backdropFilter:'blur(14px)', WebkitBackdropFilter:'blur(14px)', borderBottom:`1px solid ${t.border}`, boxShadow: scrolled ? t.shadowCard : 'none', transition:'all 300ms ease' }}>
@@ -279,8 +311,8 @@ const AppHeader = ({ t, activeSection }) => {
           <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.textMuted, marginTop:'2px' }}>Voyance · Suisse</div>
         </div>
       </div>
-      <nav className="site-nav" style={{ display:'flex', gap:'22px' }}>
-        {links.slice(0,7).map(([id,label]) => (
+      <nav className="site-nav" style={{ display:'flex', gap:'20px' }}>
+        {links.slice(0,8).map(([id,label]) => (
           <button key={id} onClick={() => navClick(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'Josefin Sans',sans-serif", fontSize:'8.5px', fontWeight:500, letterSpacing:'0.14em', textTransform:'uppercase', color: activeSection===id ? t.accent : t.textMuted, borderBottom: activeSection===id ? `1px solid ${t.accent}` : '1px solid transparent', padding:'3px 0', transition:'color 200ms' }}>{label}</button>
         ))}
       </nav>
@@ -288,7 +320,7 @@ const AppHeader = ({ t, activeSection }) => {
     </header>
   );
 };
-
+ 
 // ═══════════════════════════════════════════════════
 // HERO
 // ═══════════════════════════════════════════════════
@@ -305,46 +337,50 @@ const StarField = ({ t }) => {
     </svg>
   );
 };
-
+ 
 const AppHero = ({ t }) => {
   const videoRef = React.useRef(null);
   const [videoPlaying, setVideoPlaying] = React.useState(false);
   const [vis, setVis] = React.useState(false);
-
+ 
   React.useEffect(() => {
     const vid = videoRef.current;
     if (!vid) return;
-
+ 
     const onPlay = () => {
       setVideoPlaying(true);
       // Texte apparaît 200ms après la vidéo (le temps que la frame se peigne)
       setTimeout(() => setVis(true), 200);
     };
-
+ 
+    // Si la vidéo est introuvable ou illisible, on révèle le texte tout de suite
+    const onError = () => { setVideoPlaying(true); setVis(true); };
+ 
     // Si la vidéo joue déjà (cache navigateur)
     if (!vid.paused && vid.readyState >= 3) { onPlay(); return; }
-
+ 
     vid.addEventListener('playing', onPlay);
-
+    vid.addEventListener('error', onError, true); // capture aussi les erreurs des <source>
+ 
     // Fallback : si la vidéo ne charge pas en 2.5s, on montre le texte quand même
     const fallback = setTimeout(() => { setVideoPlaying(true); setVis(true); }, 2500);
-
-    return () => { vid.removeEventListener('playing', onPlay); clearTimeout(fallback); };
+ 
+    return () => { vid.removeEventListener('playing', onPlay); vid.removeEventListener('error', onError, true); clearTimeout(fallback); };
   }, []);
-
+ 
   const anim = delay => ({ animation: vis ? `fadeUp 800ms cubic-bezier(0.25,0.46,0.45,0.94) ${delay}ms both` : 'none', opacity: vis ? undefined : 0 });
-
+ 
   const WHITE  = 'oklch(98% 0.005 85)';
   const GOLD   = t.accent;
   const MUTED  = 'oklch(80% 0.01 80)';
   const BORDER = 'oklch(98% 0.005 85 / 0.22)';
-
+ 
   return (
     <section id="accueil" style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', position:'relative', overflow:'hidden',
       /* ── Poster en background CSS = visible au premier pixel peint ── */
       background:'#0a0806 url(images/hero-poster.jpg) center/cover no-repeat',
     }}>
-
+ 
       {/* ── Vidéo — invisible au départ, fade-in 1s quand elle joue ── */}
       <video
         ref={videoRef}
@@ -356,34 +392,34 @@ const AppHero = ({ t }) => {
         <source src="videos/intro-web.mp4" type="video/mp4" />
         <source src="videos/intro.mp4" type="video/mp4" />
       </video>
-
+ 
       {/* ── Voile sombre dégradé — lisibilité du texte ── */}
       <div style={{ position:'absolute', inset:0, zIndex:1, background:'linear-gradient(160deg, rgba(8,5,2,0.62) 0%, rgba(8,5,2,0.45) 50%, rgba(8,5,2,0.70) 100%)' }} />
       <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'160px', zIndex:1, background:`linear-gradient(to top, ${t.bgPage}, transparent)` }} />
-
+ 
       {/* ── Contenu centré — caché jusqu'à ce que la vidéo joue ── */}
       <div style={{ position:'relative', zIndex:2, maxWidth:'700px', width:'100%', padding:'clamp(88px,10vh,120px) clamp(20px,5vw,48px) clamp(60px,7vh,90px)' }}>
         <div style={anim(0)}><Eyebrow t={{ ...t, accent: GOLD }}>✦ &nbsp; Voyance & Médiumnité · Suisse &nbsp; ✦</Eyebrow></div>
-
+ 
         <h1 style={{ ...anim(110), fontFamily:"'Playfair Display',serif", fontSize:'clamp(40px,5.6vw,76px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: WHITE, marginBottom:0 }}>
           Tu cherches une réponse.
         </h1>
         <h1 style={{ ...anim(180), fontFamily:"'Playfair Display',serif", fontSize:'clamp(40px,5.6vw,76px)', fontWeight:300, lineHeight:1.06, letterSpacing:'-0.02em', color: WHITE, marginBottom:'24px' }}>
           <em style={{ fontStyle:'italic', color: GOLD }}>Pas un discours.</em>
         </h1>
-
+ 
         <p style={{ ...anim(260), fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.5vw,16px)', lineHeight:1.85, color: MUTED, maxWidth:'440px', margin:'0 auto 30px' }}>
           Je te dis ce que je capte. Rien de plus. Tu appelles — on voit ensemble ce qui se présente.
         </p>
-
+ 
         <div style={{ ...anim(320), marginBottom:'30px' }}><Ornament t={{ ...t, accent: GOLD, borderStrong: BORDER }} /></div>
-
+ 
         <div style={{ ...anim(400), marginBottom:'6px', animation: vis ? 'heroPulse 2.6s ease-in-out infinite' : 'none' }}>
           <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(22px,3vw,42px)', fontWeight:600, letterSpacing:'0.05em', color: GOLD, textDecoration:'none', lineHeight:1 }}>0901 212 212</a>
           <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'clamp(22px,3vw,42px)', fontWeight:300, letterSpacing:'0.04em', color: GOLD, opacity:0.6, lineHeight:1, marginLeft:'clamp(8px,1vw,14px)' }}>CHF 2.– / min.</span>
         </div>
         <div style={{ ...anim(420), fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', letterSpacing:'0.18em', color: MUTED, marginBottom:'30px' }}>Disponible 7j/7 · 8h–22h</div>
-
+ 
         <div style={{ ...anim(500), display:'flex', gap:'12px', justifyContent:'center', flexWrap:'wrap', marginBottom:'44px' }}>
           <a href="tel:0901212212" style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: GOLD, border:`1px solid ${GOLD}`, borderRadius:'3px', padding:'14px 34px', textDecoration:'none', animation: vis ? 'btnPulse 2.6s ease-in-out infinite' : 'none', display:'flex', alignItems:'center', gap:'8px' }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18a19.79 19.79 0 013 .17 2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.18z"/></svg>
@@ -391,7 +427,7 @@ const AppHero = ({ t }) => {
           </a>
           <button onClick={() => scrollToSection('methodes')} style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'10px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: WHITE, background:'transparent', border:`1px solid ${BORDER}`, borderRadius:'3px', padding:'14px 34px', cursor:'pointer' }}>Voir les méthodes</button>
         </div>
-
+ 
         <div style={{ ...anim(600), display:'flex', justifyContent:'center', gap:'clamp(28px,5vw,64px)', flexWrap:'wrap', paddingTop:'18px', borderTop:`1px solid ${BORDER}` }}>
           {[['15+','Années d\'expérience'],['7j/7','Disponibilité'],['100%','Confidentiel']].map(([v,l]) => (
             <div key={v} style={{ textAlign:'center' }}>
@@ -401,7 +437,7 @@ const AppHero = ({ t }) => {
           ))}
         </div>
       </div>
-
+ 
       <div style={{ position:'absolute', bottom:'20px', left:'50%', transform:'translateX(-50%)', opacity: vis ? 0.5 : 0, cursor:'pointer', display:'flex', flexDirection:'column', alignItems:'center', gap:'4px', zIndex:3, transition:'opacity 600ms 800ms' }} onClick={() => scrollToSection('apropos')}>
         <span style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', letterSpacing:'0.18em', textTransform:'uppercase', color: GOLD }}>Découvrir</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="1.5" strokeLinecap="round" style={{ animation:'floatDot 2s ease-in-out infinite' }}><polyline points="6 9 12 15 18 9"/></svg>
@@ -409,7 +445,7 @@ const AppHero = ({ t }) => {
     </section>
   );
 };
-
+ 
 // ═══════════════════════════════════════════════════
 // QUI JE SUIS (À PROPOS)
 // ═══════════════════════════════════════════════════
@@ -464,7 +500,7 @@ const AppAbout = ({ t }) => (
     </div>
   </section>
 );
-
+ 
 // ═══════════════════════════════════════════════════
 // COMMENT ÇA MARCHE
 // ═══════════════════════════════════════════════════
@@ -507,7 +543,7 @@ const AppHowItWorks = ({ t }) => {
     </section>
   );
 };
-
+ 
 // ═══════════════════════════════════════════════════
 // MÉTHODES
 // ═══════════════════════════════════════════════════
@@ -582,7 +618,7 @@ const METHODES = [
     detail:'Idéal pour : messages de l\'au-delà, questions ouvertes, guidance profonde.',
   },
 ];
-
+ 
 const AppMethodes = ({ t }) => {
   const [active, setActive] = React.useState(null);
   return (
@@ -619,7 +655,82 @@ const AppMethodes = ({ t }) => {
     </section>
   );
 };
-
+ 
+// ═══════════════════════════════════════════════════
+// BOUTIQUE — MAISON SIDÉRALE
+// ═══════════════════════════════════════════════════
+const BOUTIQUE_PRODUITS = [
+  {
+    nom: "Bougie d'aromathérapie en cire de soja",
+    prix: "CHF 29.90",
+    img: "https://maisonsiderale.com/cdn/shop/files/S5fdfb9ab531c46a497fee8560ab5852fF.webp?v=1779381208&width=533",
+    url: "https://maisonsiderale.com/products/transparent-romantic-aromatherapy-candle-lamp-gift-aromatherapy-candle-guest-gift-candle-wedding-candle-candle-jar",
+  },
+  {
+    nom: "L'Obsidienne · bracelet de protection",
+    prix: "CHF 34.00",
+    img: "https://maisonsiderale.com/cdn/shop/files/S764d351d4ee84e7e990cf2c530924a07S.webp?v=1779558460&width=533",
+    url: "https://maisonsiderale.com/products/lobsidienne-bracelet-de-protection-taillee-dans-le-verre-des-volcans-pour-celles-et-ceux-qui-filtrent-ce-qui-les-entoure",
+  },
+  {
+    nom: "Nappe d'autel · Croix celtique",
+    prix: "CHF 22.90",
+    img: "https://maisonsiderale.com/cdn/shop/files/Sbfccd2f805de4d3c9dade7bdd673b303Q.webp?v=1779293625&width=533",
+    url: "https://maisonsiderale.com/products/celtic-cross-altar-cloth-tarot-card-table-cloth-witch-moon-divination-table-cover-for-tarot-mat-witchy-gifts-decor-card-pad",
+  },
+  {
+    nom: "Pochette en velours · cartes & accessoires",
+    prix: "CHF 12.90",
+    prixBarre: "CHF 19.90",
+    promo: true,
+    img: "https://maisonsiderale.com/cdn/shop/files/S7ca2fcf0f82d45f39a0540f89678baabT.webp?v=1779291815&width=533",
+    url: "https://maisonsiderale.com/products/pochette-en-velours-pour-cartes-et-accessoires-de-divination",
+  },
+];
+ 
+const AppBoutique = ({ t }) => (
+  <section id="boutique" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgSurface, position:'relative', overflow:'hidden' }}>
+    <div style={{ position:'absolute', left:'-60px', bottom:'-60px', width:'360px', height:'360px', background:`radial-gradient(circle, ${t.accent}12, transparent 70%)`, pointerEvents:'none' }} />
+    <div style={{ position:'relative', zIndex:1, textAlign:'center', marginBottom:'clamp(32px,5vw,52px)' }}>
+      <Eyebrow t={t}>La boutique</Eyebrow>
+      <Heading2 t={t}>Maison <em style={{ fontStyle:'italic', color: t.accent }}>Sidérale</em></Heading2>
+      <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'15px', lineHeight:1.7, color: t.textSecondary, maxWidth:'480px', margin:'0 auto' }}>
+        Tarots, cristaux et bougies, choisis pour leur justesse — pour celles et ceux qui préfèrent lire les signes plutôt que les subir.
+      </p>
+    </div>
+ 
+    <div style={{ position:'relative', zIndex:1, display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(190px,1fr))', gap:'clamp(12px,2vw,20px)', maxWidth:'1060px', margin:'0 auto' }}>
+      {BOUTIQUE_PRODUITS.map((p,i) => (
+        <a key={i} href={p.url} target="_blank" rel="noopener noreferrer" className="ms-card" style={{ display:'flex', flexDirection:'column', textDecoration:'none', background: t.bgCard, border:`1px solid ${t.border}`, borderRadius:'4px', overflow:'hidden', boxShadow: t.shadowCard }}>
+          <div style={{ position:'relative', aspectRatio:'1/1', overflow:'hidden', background: t.bgAlt }}>
+            {p.promo && (
+              <span style={{ position:'absolute', top:'10px', left:'10px', zIndex:2, fontFamily:"'Josefin Sans',sans-serif", fontSize:'7.5px', fontWeight:600, letterSpacing:'0.16em', textTransform:'uppercase', color: t.accentText, background: t.accent, padding:'4px 9px', borderRadius:'2px' }}>Promo</span>
+            )}
+            <img className="ms-img" src={p.img} alt={`${p.nom} — Maison Sidérale`} loading="lazy" style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} onError={e => { e.target.style.display='none'; }} />
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', gap:'10px', flex:1, padding:'16px 16px 20px' }}>
+            <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:'15.5px', fontWeight:400, color: t.textPrimary, lineHeight:1.3 }}>{p.nom}</h3>
+            <div style={{ marginTop:'auto', display:'flex', alignItems:'baseline', gap:'8px', fontFamily:"'Josefin Sans',sans-serif", fontSize:'13px', fontWeight:600, letterSpacing:'0.04em', color: t.accent }}>
+              {p.prix}
+              {p.prixBarre && <span style={{ fontWeight:300, fontSize:'11px', color: t.textMuted, textDecoration:'line-through' }}>{p.prixBarre}</span>}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+ 
+    <div style={{ position:'relative', zIndex:1, textAlign:'center', marginTop:'clamp(30px,4vw,46px)' }}>
+      <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', color: t.textMuted, marginBottom:'18px' }}>
+        Livraison offerte dès 50.– · expédition soignée sous 48 h depuis la Suisse.
+      </p>
+      <a href="https://maisonsiderale.com/" target="_blank" rel="noopener noreferrer" className="ms-shop-link" style={{ display:'inline-flex', alignItems:'center', gap:'9px', fontFamily:"'Josefin Sans',sans-serif", fontSize:'10.5px', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color: t.accentText, background: t.accent, borderRadius:'3px', padding:'13px 34px', textDecoration:'none' }}>
+        Découvrir la boutique
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+      </a>
+    </div>
+  </section>
+);
+ 
 // ═══════════════════════════════════════════════════
 // TÉMOIGNAGES
 // ═══════════════════════════════════════════════════
@@ -630,7 +741,7 @@ const TESTIMONIALS = [
   { quote:"Troisième consultation en deux ans. Toujours la même honnêteté, le même calme. Ses indications sur ma vie professionnelle se sont révélées exactes.", name:"Marc D.", city:"Neuchâtel", stars:5 },
   { quote:"J'avais une question précise sur ma relation. Il a cerné la situation en quelques secondes. Pas de blabla, pas de mystère inutile. Une réponse claire.", name:"Isabelle T.", city:"Berne", stars:5 },
 ];
-
+ 
 const AppTestimonials = ({ t }) => {
   const [idx, setIdx] = React.useState(0);
   const [fading, setFading] = React.useState(false);
@@ -665,7 +776,7 @@ const AppTestimonials = ({ t }) => {
     </section>
   );
 };
-
+ 
 // ═══════════════════════════════════════════════════
 // FAQ
 // ═══════════════════════════════════════════════════
@@ -677,8 +788,9 @@ const FAQ_ITEMS = [
   { q:'Est-ce que la voyance peut vraiment m\'aider ?', a:'Une consultation bien menée t\'offre un autre regard sur ta situation. Pas des certitudes absolues — personne ne peut les promettre honnêtement — mais un éclairage souvent utile pour avancer. Je te dis ce que je vois, tu en fais ce que tu juges bon.' },
   { q:'Combien de temps dure une consultation ?', a:'Il n\'y a pas de durée imposée. La plupart des consultations durent entre 10 et 25 minutes. Tu raccroches quand tu te sens satisfait. Pas de pression.' },
   { q:'Puis-je poser des questions sur une autre personne ?', a:'Oui, sur des personnes proches. Cependant, la consultation reste centrée sur toi et ta relation à cette personne — non sur une surveillance de quelqu\'un à son insu.' },
+  { q:'Proposez-vous des objets de voyance à la vente ?', a:'Oui. J\'ai réuni une sélection de tarots, cristaux et bougies dans ma boutique en ligne Maison Sidérale. Livraison offerte dès 50.– et expédition sous 48 h depuis la Suisse. Tu trouveras le lien dans la section « Boutique » de ce site.' },
 ];
-
+ 
 const FaqItem = ({ t, item }) => {
   const [open, setOpen] = React.useState(false);
   return (
@@ -695,7 +807,7 @@ const FaqItem = ({ t, item }) => {
     </div>
   );
 };
-
+ 
 const AppFAQ = ({ t }) => (
   <section id="faq" style={{ padding:'clamp(52px,7vw,96px) clamp(20px,5vw,68px)', background: t.bgAlt }}>
     <div style={{ maxWidth:'720px', margin:'0 auto' }}>
@@ -709,14 +821,14 @@ const AppFAQ = ({ t }) => (
     </div>
   </section>
 );
-
+ 
 // ═══════════════════════════════════════════════════
 // CONTACT / CTA CENTRAL
 // ═══════════════════════════════════════════════════
 const EMAILJS_SERVICE_ID = 'service_8pt08ad';
 const EMAILJS_TEMPLATE_ID = 'template_qe0x9k7';
 if (typeof emailjs !== 'undefined') { emailjs.init({ publicKey: 'liRFAyxBo1908cbzF' }); }
-
+ 
 const CONSULTATION_TYPES = [
   'Médiumnité pure',
   'Oracle',
@@ -724,7 +836,7 @@ const CONSULTATION_TYPES = [
   'Numérologie',
   'Écriture automatique',
 ];
-
+ 
 const inputStyle = (t, focused) => ({
   width: '100%',
   background: t.bgCard,
@@ -738,7 +850,7 @@ const inputStyle = (t, focused) => ({
   transition: 'border-color 200ms',
   WebkitAppearance: 'none',
 });
-
+ 
 const labelStyle = (t) => ({
   display: 'block',
   fontFamily: "'Josefin Sans',sans-serif",
@@ -748,12 +860,12 @@ const labelStyle = (t) => ({
   color: t.accent,
   marginBottom: '6px',
 });
-
+ 
 function BookingForm({ t }) {
   const formRef = React.useRef(null);
   const [focused, setFocused] = React.useState('');
   const [status, setStatus] = React.useState('idle');
-
+ 
   const handleSubmit = e => {
     e.preventDefault();
     if (status === 'sending') return;
@@ -774,13 +886,13 @@ function BookingForm({ t }) {
       setStatus('error');
     });
   };
-
+ 
   const focusProps = key => ({
     onFocus: () => setFocused(key),
     onBlur:  () => setFocused(''),
     style: inputStyle(t, focused === key),
   });
-
+ 
   if (status === 'success') {
     return (
       <div style={{ textAlign:'center', padding:'40px 20px' }}>
@@ -797,7 +909,7 @@ function BookingForm({ t }) {
       </div>
     );
   }
-
+ 
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
       <input type="hidden" name="recu_le" value={new Date().toLocaleString('fr-CH')} />
@@ -849,7 +961,7 @@ function BookingForm({ t }) {
     </form>
   );
 }
-
+ 
 const AppContact = ({ t }) => (
   <section id="contact" style={{ padding:'clamp(56px,8vw,108px) clamp(20px,5vw,68px)', background: t.bgSurface, borderTop:`1px solid ${t.border}`, position:'relative', overflow:'hidden' }}>
     <StarField t={t} />
@@ -895,7 +1007,7 @@ const AppContact = ({ t }) => (
     </div>
   </section>
 );
-
+ 
 // ═══════════════════════════════════════════════════
 // FOOTER
 // ═══════════════════════════════════════════════════
@@ -911,10 +1023,19 @@ const AppFooter = ({ t }) => (
         <div>
           <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Navigation</div>
           <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:'7px' }}>
-            {[['accueil','Accueil'],['apropos','Qui je suis'],['methodes','Les méthodes'],['comment','Comment ça marche'],['temoignages','Témoignages'],['faq','FAQ'],['contact','Contact']].map(([id,l]) => (
+            {[['accueil','Accueil'],['apropos','Qui je suis'],['methodes','Les méthodes'],['boutique','Boutique'],['comment','Comment ça marche'],['temoignages','Témoignages'],['faq','FAQ'],['contact','Contact']].map(([id,l]) => (
               <li key={id}><button onClick={() => scrollToSection(id)} style={{ background:'none', border:'none', cursor:'pointer', fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color: t.textMuted, padding:0 }}>{l}</button></li>
             ))}
           </ul>
+        </div>
+        <div>
+          <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Boutique</div>
+          <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:'7px' }}>
+            <li><a href="https://maisonsiderale.com/" target="_blank" rel="noopener noreferrer" style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color: t.textMuted, textDecoration:'none' }}>Maison Sidérale</a></li>
+            <li><a href="https://maisonsiderale.com/collections/all" target="_blank" rel="noopener noreferrer" style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color: t.textMuted, textDecoration:'none' }}>Catalogue</a></li>
+            <li><a href="https://maisonsiderale.com/pages/contact" target="_blank" rel="noopener noreferrer" style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', color: t.textMuted, textDecoration:'none' }}>Contact boutique</a></li>
+          </ul>
+          <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'11px', color: t.textMuted, lineHeight:1.6, marginTop:'10px' }}>Tarots · cristaux · bougies<br />Livraison offerte dès 50.–</div>
         </div>
         <div>
           <div style={{ fontFamily:"'Josefin Sans',sans-serif", fontSize:'8px', letterSpacing:'0.2em', textTransform:'uppercase', color: t.accent, marginBottom:'12px' }}>Contact</div>
@@ -936,20 +1057,20 @@ const AppFooter = ({ t }) => (
     </div>
   </footer>
 );
-
+ 
 // ═══════════════════════════════════════════════════
 // APP
 // ═══════════════════════════════════════════════════
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"theme":"clair"}/*EDITMODE-END*/;
-
+ 
 const App = () => {
   const { tweaks, setTweak } = useTweaks(TWEAK_DEFAULTS);
   const t = THEMES[tweaks.theme] || THEMES.sombre;
-
+ 
   const [activeSection, setActiveSection] = React.useState('accueil');
-
+ 
   React.useEffect(() => {
-    const ids = ['accueil','apropos','methodes','comment','temoignages','faq','contact'];
+    const ids = ['accueil','apropos','methodes','boutique','comment','temoignages','faq','contact'];
     const obs = ids.map(id => {
       const el = document.getElementById(id);
       if (!el) return null;
@@ -958,12 +1079,12 @@ const App = () => {
     });
     return () => obs.forEach(o => o?.disconnect());
   }, []);
-
+ 
   React.useEffect(() => {
     document.body.style.background = t.bgPage;
     document.body.style.color = t.textPrimary;
   }, [t]);
-
+ 
   return (
     <React.Fragment>
       <AppHeader t={t} activeSection={activeSection} />
@@ -972,12 +1093,14 @@ const App = () => {
         <AppAbout t={t} />
         <AppHowItWorks t={t} />
         <AppMethodes t={t} />
+        <AppBoutique t={t} />
         <AppTestimonials t={t} />
         <AppFAQ t={t} />
         <AppContact t={t} />
       </main>
       <AppFooter t={t} />
       <FloatingCall t={t} />
+      <BackToTop t={t} />
       <TweaksPanel title="Apparence">
         <TweakSection title="Ambiance">
           <TweakRadio label="Thème" value={tweaks.theme} onChange={v => setTweak('theme', v)}
@@ -987,7 +1110,7 @@ const App = () => {
     </React.Fragment>
   );
 };
-
+ 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 </body>
